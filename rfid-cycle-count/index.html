@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RFID Cycle Count Tool</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f0f0f0;
+            color: #222;
+            max-width: 420px;
+            margin: 0 auto;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* ===== TOP BAR (dark) ===== */
+        .topbar {
+            background: #1a1a2e;
+            color: #fff;
+            padding: 10px 16px 0 16px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .topbar-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .topbar-title {
+            font-size: 17px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+        .topbar-icons {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+        }
+        .topbar-icons span {
+            font-size: 18px;
+            cursor: pointer;
+            opacity: 0.7;
+        }
+        .topbar-icons span:hover { opacity: 1; }
+        .hamburger {
+            font-size: 22px;
+            cursor: pointer;
+            opacity: 0.8;
+            margin-right: 12px;
+            line-height: 1;
+        }
+
+        /* ===== SCAN HERO (big count area) ===== */
+        .scan-hero {
+            padding: 8px 0 12px 0;
+        }
+        .scan-hero-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .play-btn {
+            width: 48px; height: 48px;
+            background: #2ecc40;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 22px; color: #fff;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: background 0.2s;
+        }
+        .play-btn.active { background: #e67e22; }
+        .scan-count-area { flex: 1; }
+        .scan-big-count {
+            font-size: 52px;
+            font-weight: 800;
+            color: #2ecc40;
+            line-height: 1;
+        }
+        .scan-progress-row {
+            display: flex; align-items: center; gap: 8px; margin-top: 4px;
+        }
+        .scan-progress-bar {
+            flex: 1; height: 6px; background: rgba(255,255,255,0.2);
+            border-radius: 3px; overflow: hidden;
+        }
+        .scan-progress-fill {
+            height: 100%; background: #2ecc40; border-radius: 3px;
+            transition: width 0.3s;
+        }
+        .scan-pct-label { font-size: 12px; color: rgba(255,255,255,0.5); }
+        .scan-expected-area {
+            text-align: right; flex-shrink: 0;
+        }
+        .scan-expected-label {
+            font-size: 13px; color: rgba(255,255,255,0.6); display: block;
+        }
+        .scan-check { font-size: 18px; }
+
+        .scan-location-pill {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 6px 14px;
+            font-size: 13px;
+            color: #fff;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        .pill-chevron { font-size: 10px; opacity: 0.6; }
+
+        /* ===== TABS BAR ===== */
+        .scan-tabs-bar {
+            display: flex;
+            background: #fff;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        .scan-tab {
+            flex: 1; text-align: center;
+            padding: 10px; font-size: 14px; font-weight: 700;
+            color: #999; cursor: pointer;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+        }
+        .scan-tab.active {
+            color: #1a1a2e;
+            border-bottom-color: #1a1a2e;
+        }
+
+        /* ===== SCAN BODY ===== */
+        .scan-body { padding: 0; }
+
+        .sim-controls {
+            display: flex; gap: 6px; padding: 10px 12px;
+            background: #e8e8e8;
+        }
+        .sim-btn {
+            flex: 1; padding: 8px; border: none; border-radius: 6px;
+            font-size: 12px; font-weight: 700; cursor: pointer;
+            background: #d0d0d0; color: #333;
+        }
+        .sim-btn.primary { background: #2ecc40; color: #fff; }
+
+        /* ===== CATEGORY LIST ===== */
+        .cat-list { background: #fff; }
+        .cat-parent {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 16px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            background: #f7f9fb;
+        }
+        .cat-parent:hover { background: #eef2f7; }
+        .cat-parent-left { display: flex; flex-direction: column; }
+        .cat-parent-name { font-size: 14px; font-weight: 700; text-transform: uppercase; }
+        .cat-parent-pct { font-size: 12px; color: #999; margin-top: 2px; }
+        .cat-parent-right { display: flex; align-items: center; gap: 10px; }
+        .cat-parent-count { font-size: 14px; font-family: monospace; color: #555; }
+        .cat-chevron { font-size: 16px; color: #999; transition: transform 0.2s; }
+        .cat-chevron.open { color: #333; }
+
+        .cat-sub {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 16px 12px 36px;
+            border-bottom: 1px solid #f0f0f0;
+            background: #fff;
+        }
+        .cat-sub-left { display: flex; flex-direction: column; }
+        .cat-sub-name { font-size: 13px; font-weight: 600; }
+        .cat-sub-pct { font-size: 11px; color: #aaa; margin-top: 1px; }
+        .cat-sub-right { display: flex; align-items: center; gap: 10px; }
+        .cat-sub-count { font-size: 13px; font-family: monospace; color: #666; }
+        .cat-sub-chevron { font-size: 14px; color: #ccc; }
+
+        /* ===== STRAY TAGS ===== */
+        .stray-section {
+            background: #fff;
+            border-top: 2px solid #f0e6d6;
+        }
+        .stray-header {
+            display: flex; justify-content: space-between;
+            padding: 14px 16px 0 16px;
+        }
+        .stray-label { font-size: 14px; font-weight: 700; }
+        .stray-count { font-size: 14px; font-family: monospace; color: #c0392b; }
+        .stray-pct { font-size: 12px; color: #aaa; padding: 2px 16px 10px 16px; }
+        .stray-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 16px;
+            border-top: 1px solid #f5f5f5;
+            background: #fefcf9;
+        }
+        .stray-epc { font-family: monospace; font-size: 12px; color: #444; }
+        .stray-icon { font-size: 18px; opacity: 0.5; }
+
+        /* ===== BOTTOM BAR ===== */
+        .scan-bottom-bar {
+            position: sticky; bottom: 0;
+            padding: 10px 12px;
+            background: #fff;
+            border-top: 1px solid #ddd;
+        }
+        .bottom-btn {
+            width: 100%; padding: 14px;
+            background: #ff9900; color: #1a1a2e;
+            border: none; border-radius: 10px;
+            font-size: 15px; font-weight: 700;
+            cursor: pointer;
+        }
+        .bottom-btn:hover { background: #e88b00; }
+
+        /* ===== HOME VIEW ===== */
+        .body-content { padding: 12px; }
+        .home-grid { display: grid; gap: 10px; }
+        .home-card {
+            background: #fff; border-radius: 12px; padding: 16px;
+            border: 1px solid #ddd; cursor: pointer;
+            transition: box-shadow 0.15s;
+        }
+        .home-card:hover { box-shadow: 0 2px 10px rgba(0,0,0,0.08); border-color: #ff9900; }
+        .home-card-top { display: flex; justify-content: space-between; }
+        .home-city { font-size: 17px; font-weight: 700; }
+        .home-sid { font-size: 11px; font-family: monospace; color: #999; }
+        .home-venue { font-size: 13px; color: #666; margin-top: 4px; }
+        .home-dates { font-size: 12px; color: #ff9900; font-weight: 600; margin-top: 3px; }
+        .home-meta { font-size: 11px; color: #aaa; margin-top: 6px; }
+        .home-history-btn {
+            text-align: center; padding: 14px; margin-top: 12px;
+            background: #fff; border-radius: 10px; border: 1px solid #ddd;
+            font-size: 14px; font-weight: 600; color: #555; cursor: pointer;
+        }
+        .home-history-btn:hover { border-color: #ff9900; }
+
+        /* ===== LOCATION LIST ===== */
+        .loc-list { display: grid; gap: 6px; }
+        .loc-row {
+            display: flex; align-items: center; gap: 12px;
+            background: #fff; border-radius: 10px; padding: 14px;
+            border: 1px solid #e0e0e0; cursor: pointer;
+        }
+        .loc-row:hover { border-color: #ff9900; }
+        .loc-row-icon { font-size: 22px; }
+        .loc-row-info { flex: 1; }
+        .loc-row-label { font-size: 14px; font-weight: 600; }
+        .loc-row-id { font-size: 10px; font-family: monospace; color: #999; margin-top: 2px; }
+        .loc-row-chevron { font-size: 20px; color: #ccc; }
+
+        /* ===== RESULTS VIEW ===== */
+        .results-stats {
+            display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; margin-bottom: 12px;
+        }
+        .r-stat {
+            background: #fff; border-radius: 10px; padding: 12px 6px;
+            text-align: center; border: 1px solid #e0e0e0;
+        }
+        .r-val { font-size: 22px; font-weight: 800; }
+        .r-val.green { color: #2ecc40; }
+        .r-val.red { color: #c0392b; }
+        .r-lbl { font-size: 10px; color: #999; margin-top: 2px; }
+
+        .sel-actions { display: flex; gap: 6px; margin-bottom: 10px; }
+        .sel-btn {
+            padding: 6px 14px; border: 1px solid #ddd; border-radius: 6px;
+            background: #fff; font-size: 12px; font-weight: 600; cursor: pointer;
+        }
+        .sel-btn:hover { border-color: #ff9900; }
+
+        .epc-list {
+            max-height: 350px; overflow-y: auto;
+            border: 1px solid #e0e0e0; border-radius: 10px; background: #fff;
+        }
+        .epc-row {
+            display: flex; align-items: center; gap: 8px;
+            padding: 9px 12px; border-bottom: 1px solid #f0f0f0;
+            cursor: pointer; font-size: 12px;
+        }
+        .epc-row:hover { background: #f5f9ff; }
+        .epc-row.selected { background: #e6f3ff; }
+        .epc-row.stray { background: #fef9f4; }
+        .epc-row.stray.selected { background: #fde8cc; }
+        .epc-check { cursor: pointer; flex-shrink: 0; }
+        .epc-code { font-family: monospace; font-size: 11px; flex: 1; word-break: break-all; }
+        .epc-badge { font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 8px; flex-shrink: 0; }
+        .match-b { background: #e6f7e9; color: #1a9c3e; }
+        .stray-b { background: #fde8e0; color: #c0392b; }
+
+        .move-panel {
+            background: #fff; border: 2px solid #ff9900; border-radius: 12px;
+            padding: 14px; margin-top: 14px;
+        }
+        .move-label { font-weight: 700; font-size: 14px; margin-bottom: 8px; }
+        .move-select {
+            width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px;
+            font-size: 12px; margin-bottom: 10px;
+        }
+        .move-btn {
+            width: 100%; padding: 13px; background: #ff9900; color: #1a1a2e;
+            border: none; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer;
+        }
+        .move-btn:hover { background: #e88b00; }
+
+        /* ===== HISTORY ===== */
+        .hist-list { display: grid; gap: 8px; }
+        .hist-row {
+            background: #fff; border-radius: 10px; padding: 14px;
+            border: 1px solid #e0e0e0;
+        }
+        .hist-top { display: flex; justify-content: space-between; margin-bottom: 4px; }
+        .hist-time { font-size: 11px; color: #999; }
+        .hist-status { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 6px; }
+        .hist-status.pending { background: #fff3cd; color: #856404; }
+        .hist-status.confirmed { background: #d4edda; color: #155724; }
+        .hist-count { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+        .hist-route { font-family: monospace; font-size: 10px; color: #888; margin-bottom: 8px; word-break: break-all; }
+        .hist-btn {
+            padding: 6px 14px; border: 1px solid #ddd; border-radius: 6px;
+            background: #fff; font-size: 12px; font-weight: 600; cursor: pointer;
+        }
+        .hist-btn:hover { border-color: #2ecc40; }
+
+        .empty-state { text-align: center; padding: 40px; color: #999; }
+
+        /* ===== MODAL ===== */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5); z-index: 200;
+            justify-content: center; align-items: center;
+        }
+        .modal-box {
+            background: #fff; border-radius: 16px; padding: 28px;
+            text-align: center; max-width: 340px; width: 90%;
+        }
+        .modal-box h3 { margin-bottom: 10px; }
+        .modal-box p { font-size: 13px; margin-bottom: 6px; }
+        .modal-detail { font-family: monospace; font-size: 11px; color: #888; }
+        .modal-note { color: #2ecc40; font-weight: 600; margin-top: 10px; }
+        .modal-ok {
+            margin-top: 16px; padding: 10px 32px;
+            background: #1a1a2e; color: #fff; border: none;
+            border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+    <div class="modal-overlay" id="modalOverlay"></div>
+
+    <script>
+    // ========== DATA ==========
+    const LOCATIONS = {
+        "NA-AA-434": {
+            storeId: "NA-AA-434", tour: "BTS",
+            stops: {
+                TAMPA: {
+                    city: "Tampa, FL", venue: "Raymond James Stadium",
+                    dates: "4/23/2026 - 4/28/2026",
+                    locations: [
+                        { id: "NA-AA-434_BTS_TAMPA_WAREHOUSE_1", label: "Memphis Warehouse", type: "warehouse" },
+                        { id: "NA-AA-434_BTS_TAMPA_WAREHOUSE_2", label: "Tampa Local Warehouse", type: "warehouse" },
+                        { id: "NA-AA-434_BTS_TAMPA_STORE_1", label: "Tent Store", type: "store" },
+                        { id: "NA-AA-434_BTS_TAMPA_STORE_2", label: "In-Venue Store #1", type: "store" },
+                        { id: "NA-AA-434_BTS_TAMPA_STORE_3", label: "In-Venue Store #2", type: "store" }
+                    ]
+                },
+                STANFORD: {
+                    city: "Stanford, CA", venue: "Stanford Stadium",
+                    dates: "5/14/2026 - 5/19/2026",
+                    locations: [
+                        { id: "NA-AA-434_BTS_STANFORD_WAREHOUSE_1", label: "Carson Warehouse", type: "warehouse" },
+                        { id: "NA-AA-434_BTS_STANFORD_WAREHOUSE_2", label: "Stanford Local Warehouse", type: "warehouse" },
+                        { id: "NA-AA-434_BTS_STANFORD_STORE_1", label: "Tent Store", type: "store" },
+                        { id: "NA-AA-434_BTS_STANFORD_STORE_2", label: "In-Venue Store #1", type: "store" }
+                    ]
+                }
+            }
+        },
+        "NA-AA-422": {
+            storeId: "NA-AA-422", tour: "BTS",
+            stops: {
+                ELPASO: {
+                    city: "El Paso, TX", venue: "Sun Bowl",
+                    dates: "4/30/2026 - 5/3/2026",
+                    locations: [
+                        { id: "NA-AA-422_BTS_ELPASO_WAREHOUSE_1", label: "Memphis Warehouse", type: "warehouse" },
+                        { id: "NA-AA-422_BTS_ELPASO_WAREHOUSE_2", label: "El Paso Local Warehouse", type: "warehouse" },
+                        { id: "NA-AA-422_BTS_ELPASO_STORE_1", label: "Tent Store", type: "store" }
+                    ]
+                },
+                LASVEGAS: {
+                    city: "Las Vegas, NV", venue: "Allegiant Stadium",
+                    dates: "5/21/2026 - 5/28/2026",
+                    locations: [
+                        { id: "NA-AA-422_BTS_LASVEGAS_WAREHOUSE_1", label: "Carson Warehouse", type: "warehouse" },
+                        { id: "NA-AA-422_BTS_LASVEGAS_WAREHOUSE_2", label: "Las Vegas Local Warehouse", type: "warehouse" },
+                        { id: "NA-AA-422_BTS_LASVEGAS_STORE_1", label: "Tent Store", type: "store" }
+                    ]
+                }
+            }
+        }
+    };
+
+    const MOCK_CATEGORIES = {
+        "SPORTS COLLECTIBLES": {
+            subcategories: ["SPORTS FAN ACCESSORIES", "HATS", "JERSEYS", "T-SHIRTS"]
+        },
+        "TOYS": {
+            subcategories: ["ACTION FIGURES", "PLUSH", "GAMES"]
+        }
+    };
+
+    function generateEPC() {
+        const hex = "E28011B0A505006E";
+        let suffix = "";
+        for (let i = 0; i < 8; i++) suffix += "0123456789ABCDEF"[Math.floor(Math.random() * 16)];
+        return hex + suffix;
+    }
+
+    function generateMockInventory(locationId) {
+        const inventory = {};
+        Object.entries(MOCK_CATEGORIES).forEach(([parent, data]) => {
+            let parentExpected = 0;
+            const parentEpcs = [];
+            const subs = {};
+            data.subcategories.forEach(sub => {
+                const expected = Math.floor(Math.random() * 500) + 50;
+                const epcs = [];
+                for (let i = 0; i < expected; i++) epcs.push(generateEPC());
+                subs[sub] = { expected, epcs };
+                parentExpected += expected;
+                parentEpcs.push(...epcs);
+            });
+            inventory[parent] = { expected: parentExpected, epcs: parentEpcs, subcategories: subs };
+        });
+        return inventory;
+    }
+
+    // State
+    let state = {
+        currentView: "home",
+        selectedStoreId: null,
+        selectedStop: null,
+        selectedLocation: null,
+        selectedLocationLabel: null,
+        scanSession: null,
+        scannedEPCs: [],
+        expectedInventory: {},
+        selectedForMove: new Set(),
+        moveHistory: [],
+        expandedCategories: {},
+        scanning: false
+    };
+
+    // ========== RENDER ==========
+    function render() {
+        const app = document.getElementById("app");
+        switch (state.currentView) {
+            case "home": app.innerHTML = renderHome(); break;
+            case "scan": app.innerHTML = renderScan(); break;
+            case "results": app.innerHTML = renderResults(); break;
+            case "history": app.innerHTML = renderHistory(); break;
+        }
+    }
+
+    // ========== HOME ==========
+    function renderHome() {
+        let stopsHtml = "";
+        Object.entries(LOCATIONS).forEach(([storeId, store]) => {
+            Object.entries(store.stops).forEach(([stopKey, stop]) => {
+                stopsHtml += `
+                <div class="home-card" onclick="selectStop('${storeId}','${stopKey}')">
+                    <div class="home-card-top">
+                        <span class="home-city">${stop.city}</span>
+                        <span class="home-sid">${storeId}</span>
+                    </div>
+                    <div class="home-venue">${stop.venue}</div>
+                    <div class="home-dates">${stop.dates}</div>
+                    <div class="home-meta">${stop.locations.length} locations</div>
+                </div>`;
+            });
+        });
+        return `
+        <div class="topbar">
+            <div class="topbar-row">
+                <span class="hamburger">☰</span>
+                <span class="topbar-title">Inventory Taking</span>
+                <div class="topbar-icons">
+                    <span>🔔</span><span>📡</span><span>⋮</span>
+                </div>
+            </div>
+            <div style="padding:16px 0 20px 0;text-align:center;">
+                <div style="font-size:14px;opacity:0.6;">Select a tour stop to begin</div>
+            </div>
+        </div>
+        <div class="body-content">
+            <div class="home-grid">${stopsHtml}</div>
+            <div class="home-history-btn" onclick="showHistory()">📋 View Move History</div>
+        </div>`;
+    }
+
+    function selectStop(storeId, stopKey) {
+        state.selectedStoreId = storeId;
+        state.selectedStop = stopKey;
+        const stop = LOCATIONS[storeId].stops[stopKey];
+        let locsHtml = stop.locations.map(loc => `
+            <div class="loc-row" onclick="startSession('${loc.id}','${loc.label}')">
+                <span class="loc-row-icon">${loc.type === 'warehouse' ? '🏭' : '🏪'}</span>
+                <div class="loc-row-info">
+                    <div class="loc-row-label">${loc.label}</div>
+                    <div class="loc-row-id">${loc.id}</div>
+                </div>
+                <span class="loc-row-chevron">›</span>
+            </div>`).join("");
+
+        document.getElementById("app").innerHTML = `
+        <div class="topbar">
+            <div class="topbar-row">
+                <span class="hamburger" onclick="goHome()">←</span>
+                <span class="topbar-title">${stop.city}</span>
+                <div class="topbar-icons"><span>⋮</span></div>
+            </div>
+            <div style="padding:8px 0 14px 0;">
+                <div style="font-size:13px;opacity:0.6;">${stop.venue} · ${stop.dates}</div>
+            </div>
+        </div>
+        <div class="body-content">
+            <div class="loc-list">${locsHtml}</div>
+        </div>`;
+    }
+
+    // ========== SCAN VIEW ==========
+    function startSession(locationId, label) {
+        state.selectedLocation = locationId;
+        state.selectedLocationLabel = label;
+        state.scanSession = { startTime: new Date(), locationId };
+        state.scannedEPCs = [];
+        state.selectedForMove = new Set();
+        state.expectedInventory = generateMockInventory(locationId);
+        state.expandedCategories = {};
+        state.scanning = false;
+        state.currentView = "scan";
+        render();
+    }
+
+    function renderScan() {
+        const totalExpected = Object.values(state.expectedInventory).reduce((s, c) => s + c.expected, 0);
+        const scannedCount = state.scannedEPCs.length;
+        const pct = totalExpected > 0 ? Math.round((scannedCount / totalExpected) * 100) : 0;
+
+        // Stray tags
+        const allExpected = [];
+        Object.values(state.expectedInventory).forEach(c => allExpected.push(...c.epcs));
+        const strayTags = state.scannedEPCs.filter(epc => !allExpected.includes(epc));
+
+        // Category rows
+        let catHtml = "";
+        Object.entries(state.expectedInventory).forEach(([parent, data]) => {
+            const parentScanned = state.scannedEPCs.filter(epc => data.epcs.includes(epc)).length;
+            const parentPct = data.expected > 0 ? ((parentScanned / data.expected) * 100).toFixed(2) : "0.00";
+            const isExpanded = state.expandedCategories[parent];
+
+            catHtml += `
+            <div class="cat-parent" onclick="toggleCategory('${parent}')">
+                <div class="cat-parent-left">
+                    <span class="cat-parent-name">${parent}</span>
+                    <span class="cat-parent-pct">${parentPct}%</span>
+                </div>
+                <div class="cat-parent-right">
+                    <span class="cat-parent-count">${parentScanned}/${data.expected}</span>
+                    <span class="cat-chevron ${isExpanded ? 'open' : ''}">${isExpanded ? '▾' : '›'}</span>
+                </div>
+            </div>`;
+
+            if (isExpanded) {
+                Object.entries(data.subcategories).forEach(([sub, subData]) => {
+                    const subScanned = state.scannedEPCs.filter(epc => subData.epcs.includes(epc)).length;
+                    const subPct = subData.expected > 0 ? ((subScanned / subData.expected) * 100).toFixed(2) : "0.00";
+                    catHtml += `
+                    <div class="cat-sub">
+                        <div class="cat-sub-left">
+                            <span class="cat-sub-name">${sub}</span>
+                            <span class="cat-sub-pct">${subPct}%</span>
+                        </div>
+                        <div class="cat-sub-right">
+                            <span class="cat-sub-count">${subScanned}/${subData.expected}</span>
+                            <span class="cat-sub-chevron">›</span>
+                        </div>
+                    </div>`;
+                });
+            }
+        });
+
+        // Stray tags section
+        let strayHtml = "";
+        if (strayTags.length > 0) {
+            strayHtml = `
+            <div class="stray-section">
+                <div class="stray-header">
+                    <span class="stray-label">Stray Tags</span>
+                    <span class="stray-count">${strayTags.length}/0</span>
+                </div>
+                <div class="stray-pct">0.00%</div>
+                ${strayTags.map(epc => `
+                <div class="stray-row">
+                    <span class="stray-epc">${epc}</span>
+                    <span class="stray-icon">📡</span>
+                </div>`).join("")}
+            </div>`;
+        }
+
+        // Location dropdown label
+        const locParts = state.selectedLocation.split("_");
+        const locLabel = locParts[locParts.length - 2] + " " + locParts[locParts.length - 1];
+
+        return `
+        <div class="topbar">
+            <div class="topbar-row">
+                <span class="hamburger" onclick="endSession()">☰</span>
+                <span class="topbar-title">Inventory Taking</span>
+                <div class="topbar-icons">
+                    <span>🔔</span><span>📡</span><span>⋮</span>
+                </div>
+            </div>
+            <div class="scan-hero">
+                <div class="scan-hero-row">
+                    <div class="play-btn ${state.scanning ? 'active' : ''}" onclick="toggleScanning()">
+                        ${state.scanning ? '⏸' : '▶'}
+                    </div>
+                    <div class="scan-count-area">
+                        <div class="scan-big-count">${scannedCount}</div>
+                        <div class="scan-progress-row">
+                            <div class="scan-progress-bar">
+                                <div class="scan-progress-fill" style="width:${Math.min(pct,100)}%"></div>
+                            </div>
+                            <span class="scan-pct-label">${pct}%</span>
+                        </div>
+                    </div>
+                    <div class="scan-expected-area">
+                        <span class="scan-expected-label">expected ${totalExpected.toLocaleString()}</span>
+                        <span class="scan-check">✅</span>
+                    </div>
+                </div>
+                <div class="scan-location-pill">
+                    <span>📍</span>
+                    <span>${state.selectedLocationLabel || locLabel}</span>
+                    <span class="pill-chevron">▾</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="scan-tabs-bar">
+            <div class="scan-tab active">RFID</div>
+            <div class="scan-tab">2D</div>
+        </div>
+
+        <div class="scan-body">
+            <div class="sim-controls">
+                <button class="sim-btn primary" onclick="simulateScan(10)">▶ Scan 10</button>
+                <button class="sim-btn" onclick="simulateScan(50)">Scan 50</button>
+                <button class="sim-btn" onclick="simulateStray()">+ Stray</button>
+            </div>
+            <div class="cat-list">${catHtml}</div>
+            ${strayHtml}
+        </div>
+
+        <div class="scan-bottom-bar">
+            <button class="bottom-btn" onclick="goToResults()">Review & Move Inventory →</button>
+        </div>`;
+    }
+
+    function toggleCategory(cat) {
+        state.expandedCategories[cat] = !state.expandedCategories[cat];
+        render();
+    }
+
+    function toggleScanning() {
+        state.scanning = !state.scanning;
+        if (state.scanning) autoScan();
+        render();
+    }
+
+    function autoScan() {
+        if (!state.scanning) return;
+        simulateScan(3);
+        setTimeout(() => autoScan(), 600);
+    }
+
+    function simulateScan(count) {
+        const allExpectedEPCs = [];
+        Object.values(state.expectedInventory).forEach(cat => {
+            cat.epcs.forEach(epc => { if (!state.scannedEPCs.includes(epc)) allExpectedEPCs.push(epc); });
+        });
+        const toScan = allExpectedEPCs.sort(() => Math.random() - 0.5).slice(0, count);
+        state.scannedEPCs.push(...toScan);
+        render();
+    }
+
+    function simulateStray() {
+        state.scannedEPCs.push(generateEPC());
+        render();
+    }
+
+    // ========== RESULTS & MOVE ==========
+    function goToResults() {
+        state.scanning = false;
+        state.currentView = "results";
+        render();
+    }
+
+    function renderResults() {
+        const allExpected = [];
+        Object.values(state.expectedInventory).forEach(c => allExpected.push(...c.epcs));
+        const strayTags = state.scannedEPCs.filter(epc => !allExpected.includes(epc));
+        const matchedEPCs = state.scannedEPCs.filter(epc => allExpected.includes(epc));
+
+        let epcListHtml = state.scannedEPCs.map(epc => {
+            const isStray = strayTags.includes(epc);
+            const isSelected = state.selectedForMove.has(epc);
+            return `
+            <div class="epc-row ${isStray ? 'stray' : ''} ${isSelected ? 'selected' : ''}" onclick="toggleEPC('${epc}')">
+                <input type="checkbox" ${isSelected ? 'checked' : ''} class="epc-check" />
+                <span class="epc-code">${epc}</span>
+                ${isStray ? '<span class="epc-badge stray-b">STRAY</span>' : '<span class="epc-badge match-b">MATCH</span>'}
+            </div>`;
+        }).join("");
+
+        let destOptions = "";
+        Object.entries(LOCATIONS).forEach(([storeId, store]) => {
+            Object.entries(store.stops).forEach(([stopKey, stop]) => {
+                stop.locations.forEach(loc => {
+                    if (loc.id !== state.selectedLocation) {
+                        destOptions += `<option value="${loc.id}">${loc.label} (${stop.city})</option>`;
+                    }
+                });
+            });
+        });
+
+        return `
+        <div class="topbar">
+            <div class="topbar-row">
+                <span class="hamburger" onclick="backToScan()">←</span>
+                <span class="topbar-title">Review & Move</span>
+                <div class="topbar-icons"><span>⋮</span></div>
+            </div>
+        </div>
+        <div class="body-content">
+            <div class="results-stats">
+                <div class="r-stat"><div class="r-val">${state.scannedEPCs.length}</div><div class="r-lbl">Scanned</div></div>
+                <div class="r-stat"><div class="r-val green">${matchedEPCs.length}</div><div class="r-lbl">Matched</div></div>
+                <div class="r-stat"><div class="r-val red">${strayTags.length}</div><div class="r-lbl">Stray</div></div>
+                <div class="r-stat"><div class="r-val">${state.selectedForMove.size}</div><div class="r-lbl">Selected</div></div>
+            </div>
+            <div class="sel-actions">
+                <button class="sel-btn" onclick="selectAll()">All</button>
+                <button class="sel-btn" onclick="selectStray()">Stray</button>
+                <button class="sel-btn" onclick="selectNone()">Clear</button>
+            </div>
+            <div class="epc-list">${epcListHtml}</div>
+            ${state.selectedForMove.size > 0 ? `
+            <div class="move-panel">
+                <div class="move-label">Move ${state.selectedForMove.size} EPCs to:</div>
+                <select id="destLocation" class="move-select">${destOptions}</select>
+                <button class="move-btn" onclick="executeMove()">Execute Virtual Move</button>
+            </div>` : ""}
+        </div>`;
+    }
+
+    function toggleEPC(epc) {
+        if (state.selectedForMove.has(epc)) state.selectedForMove.delete(epc);
+        else state.selectedForMove.add(epc);
+        render();
+    }
+    function selectAll() { state.scannedEPCs.forEach(e => state.selectedForMove.add(e)); render(); }
+    function selectStray() {
+        state.selectedForMove.clear();
+        const allExp = [];
+        Object.values(state.expectedInventory).forEach(c => allExp.push(...c.epcs));
+        state.scannedEPCs.filter(e => !allExp.includes(e)).forEach(e => state.selectedForMove.add(e));
+        render();
+    }
+    function selectNone() { state.selectedForMove.clear(); render(); }
+
+    function executeMove() {
+        const dest = document.getElementById("destLocation").value;
+        const epcs = [...state.selectedForMove];
+        const move = { id: Date.now(), timestamp: new Date().toISOString(), from: state.selectedLocation, to: dest, epcCount: epcs.length, epcs, status: "pending" };
+        state.moveHistory.push(move);
+        state.selectedForMove.clear();
+        showModal(`
+            <div class="modal-box">
+                <div style="font-size:48px;margin-bottom:12px;">✅</div>
+                <h3>Virtual Move Created</h3>
+                <p><strong>${move.epcCount}</strong> EPCs queued for move</p>
+                <p class="modal-detail">From: ${move.from}</p>
+                <p class="modal-detail">To: ${move.to}</p>
+                <p class="modal-note">Physical ops team notified.</p>
+                <button class="modal-ok" onclick="closeModal();render();">OK</button>
+            </div>`);
+    }
+
+    function backToScan() { state.currentView = "scan"; render(); }
+    function endSession() { state.scanning = false; state.scanSession = null; state.currentView = "home"; render(); }
+    function goHome() { state.currentView = "home"; render(); }
+
+    // ========== HISTORY ==========
+    function showHistory() { state.currentView = "history"; render(); }
+    function renderHistory() {
+        if (state.moveHistory.length === 0) {
+            return `
+            <div class="topbar"><div class="topbar-row"><span class="hamburger" onclick="goHome()">←</span><span class="topbar-title">Move History</span><div class="topbar-icons"><span>⋮</span></div></div></div>
+            <div class="body-content"><div class="empty-state">No moves yet.</div></div>`;
+        }
+        let rows = state.moveHistory.map(m => `
+            <div class="hist-row">
+                <div class="hist-top"><span class="hist-time">${new Date(m.timestamp).toLocaleString()}</span><span class="hist-status ${m.status}">${m.status.toUpperCase()}</span></div>
+                <div class="hist-count">${m.epcCount} EPCs</div>
+                <div class="hist-route">${m.from} → ${m.to}</div>
+                <button class="hist-btn" onclick="confirmMove(${m.id})">${m.status==='pending'?'Confirm Physical Move':'Confirmed ✓'}</button>
+            </div>`).join("");
+        return `
+        <div class="topbar"><div class="topbar-row"><span class="hamburger" onclick="goHome()">←</span><span class="topbar-title">Move History</span><div class="topbar-icons"><span>⋮</span></div></div></div>
+        <div class="body-content"><div class="hist-list">${rows}</div></div>`;
+    }
+    function confirmMove(id) { const m = state.moveHistory.find(x=>x.id===id); if(m) m.status="confirmed"; render(); }
+
+    // ========== MODAL ==========
+    function showModal(html) { const o=document.getElementById("modalOverlay"); o.innerHTML=html; o.style.display="flex"; }
+    function closeModal() { document.getElementById("modalOverlay").style.display="none"; }
+
+    // ========== INIT ==========
+    render();
+    </script>
+</body>
+</html>

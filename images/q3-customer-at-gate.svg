@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="260" height="150" viewBox="0 0 260 150">
+  <!-- Left gate pillar — waist-high -->
+  <rect x="56" y="65" width="12" height="50" rx="3" fill="#bbbbbb" stroke="#333333" stroke-width="2"/>
+  <circle cx="62" cy="60" r="5" fill="#2ecc71" stroke="#333333" stroke-width="1.5"/>
+
+  <!-- Right gate pillar -->
+  <rect x="138" y="65" width="12" height="50" rx="3" fill="#bbbbbb" stroke="#333333" stroke-width="2"/>
+  <circle cx="144" cy="60" r="5" fill="#2ecc71" stroke="#333333" stroke-width="1.5"/>
+  <rect x="134" y="75" width="12" height="14" rx="2" fill="#3498db" stroke="#333333" stroke-width="1.5"/>
+
+  <!-- CUSTOMER stick figure centered between gates at x=103 -->
+  <circle cx="103" cy="18" r="10" fill="none" stroke="#333333" stroke-width="2.5"/>
+  <line x1="103" y1="28" x2="103" y2="72" stroke="#333333" stroke-width="2.5"/>
+  <line x1="103" y1="42" x2="82" y2="60" stroke="#333333" stroke-width="2.5"/>
+  <line x1="103" y1="42" x2="130" y2="68" stroke="#333333" stroke-width="2.5"/>
+  <rect x="126" y="64" width="12" height="8" rx="2" fill="#3498db" stroke="#333333" stroke-width="1.5" transform="rotate(-20,132,68)"/>
+  <path d="M136,78 Q140,74 136,70" fill="none" stroke="#2980b9" stroke-width="1.5"/>
+  <path d="M139,80 Q144,74 139,68" fill="none" stroke="#2980b9" stroke-width="1.2"/>
+  <line x1="103" y1="72" x2="90" y2="100" stroke="#333333" stroke-width="2.5"/>
+  <line x1="103" y1="72" x2="116" y2="100" stroke="#333333" stroke-width="2.5"/>
+  <line x1="90" y1="100" x2="84" y2="100" stroke="#333333" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="116" y1="100" x2="122" y2="100" stroke="#333333" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- ? bubble above customer -->
+  <rect x="112" y="2" width="28" height="22" rx="7" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <polygon points="112,16 106,22 112,19" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="126" y="19" font-family="Arial,sans-serif" font-size="16" font-weight="bold" fill="#e74c3c" text-anchor="middle">?</text>
+
+  <!-- Floor line -->
+  <line x1="46" y1="115" x2="160" y2="115" stroke="#333333" stroke-width="1.5"/>
+
+  <!-- ASSOCIATE stick figure on right -->
+  <circle cx="200" cy="25" r="9" fill="none" stroke="#333333" stroke-width="2"/>
+  <line x1="200" y1="34" x2="200" y2="68" stroke="#333333" stroke-width="2"/>
+  <line x1="200" y1="46" x2="186" y2="60" stroke="#333333" stroke-width="2"/>
+  <line x1="200" y1="46" x2="214" y2="60" stroke="#333333" stroke-width="2"/>
+  <line x1="200" y1="68" x2="190" y2="90" stroke="#333333" stroke-width="2"/>
+  <line x1="200" y1="68" x2="210" y2="90" stroke="#333333" stroke-width="2"/>
+
+  <!-- Associate speech bubble -->
+  <rect x="70" y="122" width="120" height="24" rx="6" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <polygon points="190,130 198,122 190,127" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="80" y="138" font-family="Arial,sans-serif" font-size="9" fill="#333333">Tap/dip → lights open ✓</text>
+</svg>

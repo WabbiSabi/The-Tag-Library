@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vega Store Launch Workflow — With RFID Tagging</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #1a1a1a;
+    color: #e0e0e0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 12px;
+    padding: 40px;
+    min-width: 1600px;
+  }
+  h1 {
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #fff;
+    font-weight: 600;
+  }
+  .subtitle {
+    text-align: center;
+    font-size: 13px;
+    color: #999;
+    margin-bottom: 40px;
+  }
+  .workflow {
+    position: relative;
+    width: 1500px;
+    margin: 0 auto;
+  }
+
+  /* Step labels */
+  .step-label {
+    position: absolute;
+    font-size: 11px;
+    font-weight: 700;
+    color: #f0a030;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* Boxes */
+  .box {
+    position: absolute;
+    background: #2a2a2a;
+    border: 1px solid #555;
+    border-radius: 6px;
+    padding: 10px 12px;
+    text-align: center;
+    font-size: 11px;
+    line-height: 1.4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .box.highlight {
+    border-color: #f0a030;
+    background: #2e2518;
+  }
+  .box.tks {
+    border-color: #f0a030;
+    background: rgba(240, 160, 48, 0.08);
+    border-width: 2px;
+  }
+  .box.launch {
+    background: #333;
+    border-radius: 20px;
+    border-color: #777;
+    font-weight: 600;
+  }
+  .box.tagging {
+    border-color: #4ea8de;
+    background: #1a2a38;
+  }
+  .tagging-label {
+    color: #4ea8de;
+    font-weight: 700;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* SVG arrows */
+  svg.arrows {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+  .arrow-line {
+    stroke: #888;
+    stroke-width: 1.5;
+    fill: none;
+  }
+  .arrow-line.tagging-arrow {
+    stroke: #4ea8de;
+  }
+  .arrow-head {
+    fill: #888;
+  }
+  .arrow-head.tagging-head {
+    fill: #4ea8de;
+  }
+</style>
+</head>
+<body>
+
+<h1>Vega Store Launch Workflow</h1>
+<p class="subtitle">Updated with RFID 3P Vendor Tagging Workstream</p>
+
+<div class="workflow" style="height: 2150px;">
+
+  <!-- STEP 1 -->
+  <div class="step-label" style="top: 10px; left: 620px;">Step 1</div>
+  <div class="box" style="top: 30px; left: 600px; width: 200px; height: 70px;">
+    Implementation Manager interfaces with customer to set overall store expectations
+  </div>
+
+  <!-- Arrow Step1 → Step2 -->
+  <svg class="arrows"><line class="arrow-line" x1="700" y1="100" x2="700" y2="140"/><polygon class="arrow-head" points="695,138 700,148 705,138"/></svg>
+
+  <!-- STEP 2 -->
+  <div class="step-label" style="top: 140px; left: 620px;">Step 2</div>
+  <div class="box" style="top: 160px; left: 580px; width: 240px; height: 80px;">
+    Implementation Manager creates SCOT intake SIM. Subtasks auto-generate to initiate work
+  </div>
+
+  <!-- Step 2 parallel: BD intake + MerchOps (NEW) -->
+  <div class="box tagging" style="top: 160px; left: 900px; width: 240px; height: 80px;">
+    BD submits intake to MerchOps (catalog, merch count, item types, packaging, sales data, logistics)
+  </div>
+  <svg class="arrows"><line class="arrow-line tagging-arrow" x1="820" y1="200" x2="898" y2="200"/><polygon class="arrow-head tagging-head" points="896,195 906,200 896,205"/></svg>
+
+  <div class="box tagging" style="top: 270px; left: 900px; width: 240px; height: 80px;">
+    MerchOps catalog &amp; technology evaluation — reviews materials, packaging, form factors; flags bespoke tagging needs; confirms tag type per category
+  </div>
+  <svg class="arrows"><line class="arrow-line tagging-arrow" x1="1020" y1="240" x2="1020" y2="268"/><polygon class="arrow-head tagging-head" points="1015,266 1020,276 1025,266"/></svg>
+
+  <div class="box tagging" style="top: 375px; left: 900px; width: 240px; height: 60px;">
+    MerchOps outputs tagging feasibility assessment (informs tier classification &amp; vendor scoping)
+  </div>
+  <svg class="arrows"><line class="arrow-line tagging-arrow" x1="1020" y1="350" x2="1020" y2="373"/><polygon class="arrow-head tagging-head" points="1015,371 1020,381 1025,371"/></svg>
+
+  <!-- STEP 3 label -->
+  <div class="step-label" style="top: 470px; left: 30px;">Step 3 — Parallel Workstreams</div>
+
+  <!-- Arrows from Step 2 down to Step 3 row -->
+  <svg class="arrows">
+    <!-- From SCOT SIM box down -->
+    <line class="arrow-line" x1="700" y1="240" x2="700" y2="460"/>
+    <!-- Fan out lines to existing boxes -->
+    <line class="arrow-line" x1="700" y1="460" x2="80" y2="460"/>
+    <line class="arrow-line" x1="700" y1="460" x2="250" y2="460"/>
+    <line class="arrow-line" x1="700" y1="460" x2="420" y2="460"/>
+    <line class="arrow-line" x1="700" y1="460" x2="590" y2="460"/>
+    <!-- down arrows into boxes -->
+    <line class="arrow-line" x1="80" y1="460" x2="80" y2="490"/>
+    <polygon class="arrow-head" points="75,488 80,498 85,488"/>
+    <line class="arrow-line" x1="250" y1="460" x2="250" y2="490"/>
+    <polygon class="arrow-head" points="245,488 250,498 255,488"/>
+    <line class="arrow-line" x1="420" y1="460" x2="420" y2="490"/>
+    <polygon class="arrow-head" points="415,488 420,498 425,488"/>
+    <line class="arrow-line" x1="590" y1="460" x2="590" y2="490"/>
+    <polygon class="arrow-head" points="585,488 590,498 595,488"/>
+    <line class="arrow-line" x1="700" y1="460" x2="700" y2="490"/>
+    <polygon class="arrow-head" points="695,488 700,498 705,488"/>
+  </svg>
+
+  <!-- Existing Step 3 boxes - Row 1 -->
+  <div class="box" style="top: 500px; left: 10px; width: 150px; height: 65px;">
+    Customer sets up Offsite Merchant Operations OR source tags
+  </div>
+  <div class="box" style="top: 500px; left: 175px; width: 150px; height: 65px;">
+    IM has customer acquire Credit Card Readers and supply physical power/network
+  </div>
+  <div class="box" style="top: 500px; left: 345px; width: 150px; height: 65px;">
+    OCET determines BOM and arranges shipment of material to location
+  </div>
+  <div class="box" style="top: 500px; left: 515px; width: 150px; height: 65px;">
+    Vendor Management (VM) allocates appropriate 3PTD resources to store launch
+  </div>
+
+  <!-- Right side Step 3 boxes -->
+  <div class="box" style="top: 500px; left: 685px; width: 150px; height: 50px;">
+    Template store is assigned StoreID
+  </div>
+
+  <!-- Row 2 of existing -->
+  <svg class="arrows">
+    <line class="arrow-line" x1="700" y1="460" x2="900" y2="460"/>
+    <line class="arrow-line" x1="900" y1="460" x2="900" y2="600"/>
+    <polygon class="arrow-head" points="895,598 900,608 905,598"/>
+    <line class="arrow-line" x1="700" y1="460" x2="1080" y2="460"/>
+    <line class="arrow-line" x1="1080" y1="460" x2="1080" y2="600"/>
+    <polygon class="arrow-head" points="1075,598 1080,608 1085,598"/>
+  </svg>
+
+  <div class="box" style="top: 610px; left: 515px; width: 150px; height: 55px;">
+    TDPM executes Tech Deployment Readiness (TDR) Playbook
+  </div>
+  <div class="box" style="top: 610px; left: 685px; width: 150px; height: 55px;">
+    WAN team interfaces with customer to set network expectations
+  </div>
+  <div class="box" style="top: 610px; left: 855px; width: 150px; height: 55px;">
+    Multiple teams execute TSBU Playbook
+  </div>
+  <div class="box" style="top: 610px; left: 1020px; width: 160px; height: 55px;">
+    IM provides payment and Libby configuration which Asset/RIOT use to onboard services
+  </div>
+
+  <!-- Row 3 of existing -->
+  <svg class="arrows">
+    <line class="arrow-line" x1="590" y1="665" x2="590" y2="710"/>
+    <polygon class="arrow-head" points="585,708 590,718 595,708"/>
+    <line class="arrow-line" x1="760" y1="665" x2="760" y2="710"/>
+    <polygon class="arrow-head" points="755,708 760,718 765,708"/>
+    <line class="arrow-line" x1="930" y1="665" x2="930" y2="710"/>
+    <polygon class="arrow-head" points="925,708 930,718 935,708"/>
+    <line class="arrow-line" x1="1100" y1="665" x2="1100" y2="710"/>
+    <polygon class="arrow-head" points="1095,708 1100,718 1105,708"/>
+  </svg>
+
+  <div class="box" style="top: 720px; left: 515px; width: 150px; height: 50px;">
+    TDPM Creates TKS workflow
+  </div>
+  <div class="box" style="top: 720px; left: 685px; width: 150px; height: 55px;">
+    Customer provides IP info for a network with appropriate bandwidth
+  </div>
+  <div class="box" style="top: 720px; left: 855px; width: 150px; height: 55px;">
+    Multiple teams execute VSL/NBU Playbook
+  </div>
+  <div class="box" style="top: 720px; left: 1020px; width: 160px; height: 55px;">
+    CPT-OPS ingests template annotated revits into Claire depending on lane count
+  </div>
+
+  <!-- ============================================ -->
+  <!-- NEW: RFID TAGGING WORKSTREAM (Step 3, left)  -->
+  <!-- ============================================ -->
+
+  <div class="tagging-label" style="position: absolute; top: 470px; left: 1250px;">RFID Tagging Workstream (New)</div>
+
+  <!-- Arrow from feasibility assessment down into tagging workstream -->
+  <svg class="arrows">
+    <line class="arrow-line tagging-arrow" x1="1020" y1="435" x2="1020" y2="455"/>
+    <line class="arrow-line tagging-arrow" x1="1020" y1="455" x2="1300" y2="455"/>
+    <line class="arrow-line tagging-arrow" x1="1300" y1="455" x2="1300" y2="490"/>
+    <polygon class="arrow-head tagging-head" points="1295,488 1300,498 1305,488"/>
+  </svg>
+
+  <div class="box tagging" style="top: 500px; left: 1210px; width: 200px; height: 55px;">
+    1. Tier classification determined (Tier 1/2/3) based on feasibility, venue logistics, merchant capacity
+  </div>
+  <svg class="arrows"><line class="arrow-line tagging-arrow" x1="1310" y1="555" x2="1310" y2="575"/><polygon class="arrow-head tagging-head" points="1305,573 1310,583 1315,573"/></svg>
+
+  <div class="box tagging" style="top: 580px; left: 1210px; width: 200px; height: 50px;">
+    2. Service model selected (Model A / B / C) based on tier and merchant preference
+  </div>
+  <svg class="arrows"><line class="arrow-line tagging-arrow" x1="1310" y1="630" x2="1310" y2="650"/><polygon class="arrow-head tagging-head" points="1305,648 1310,658 1315,648"/></svg>
+
+  <div class="box tagging" style="top: 655px; left: 1210px; width: 200px; height: 45px;">
+    3. Tagging quote generated and provided to merchant
+  </div>
+  <svg class="arrows"><line class="arrow-line tagging-arrow" x1="1310" y1="700" x2="1310" y2="720"/><polygon class="arrow-head tagging-head" points="1305,718 1310,728 1315,718"/></svg>
+
+  <div class="box tagging" style="top: 725px; left: 1210px; width: 200px; height: 45px;">
+    4. Merchant approves → vendor engagement confirmed
+  </div>
+  <svg class="arrows"><line class="arrow-line tagging-arrow" x1="1310" y1="770" x2="1310" y2="790"/><polygon class="arrow-head tagging-head" points="1305,788 1310,798 1315,788"/></svg>
+
+  <div class="box tagging" style="top: 795px; left: 1210px; width: 200px; height: 40px;">
+    5. Customer site(s) visited and logistics evaluated
+  </div>
+  <svg class="arrows"><line class="arrow-line tagging-arrow" x1="1310" y1="835" x2="1310" y2="855"/><polygon class="arrow-head tagging-head" points="1305,853 1310,863 1315,853"/></svg>
+
+  <div class="box tagging" style="top: 860px; left: 1210px; width: 200px; height: 55px;">
+    6. Pre-print fulfillment initiated (Tier 2/3) OR on-site printing confirmed + consumables added to BOM
+  </div>
+  <svg class="arrows"><line class="arrow-line tagging-arrow" x1="1310" y1="915" x2="1310" y2="935"/><polygon class="arrow-head tagging-head" points="1305,933 1310,943 1315,933"/></svg>
+
+  <div class="box tagging" style="top: 940px; left: 1210px; width: 200px; height: 40px;">
+    7. Vendor receives SOPs
+  </div>
+
+  <!-- ============================================ -->
+  <!-- STEP 4: TKS Execution                       -->
+  <!-- ============================================ -->
+  <div class="step-label" style="top: 830px; left: 530px;">Step 4 — TKS Guided Execution</div>
+
+  <!-- Arrows converging into TKS -->
+  <svg class="arrows">
+    <line class="arrow-line" x1="590" y1="770" x2="590" y2="870"/>
+    <polygon class="arrow-head" points="585,868 590,878 595,868"/>
+    <line class="arrow-line" x1="760" y1="775" x2="760" y2="830"/>
+    <line class="arrow-line" x1="760" y1="830" x2="660" y2="830"/>
+    <line class="arrow-line" x1="660" y1="830" x2="660" y2="870"/>
+    <polygon class="arrow-head" points="655,868 660,878 665,868"/>
+    <line class="arrow-line" x1="930" y1="775" x2="930" y2="830"/>
+    <line class="arrow-line" x1="930" y1="830" x2="700" y2="830"/>
+    <line class="arrow-line" x1="1100" y1="775" x2="1100" y2="830"/>
+    <line class="arrow-line" x1="1100" y1="830" x2="720" y2="830"/>
+  </svg>
+
+  <div class="box tks" style="top: 880px; left: 530px; width: 220px; height: 70px; font-size: 13px; font-weight: 600;">
+    Uncrating and Installation
+  </div>
+
+  <svg class="arrows"><line class="arrow-line" x1="640" y1="950" x2="640" y2="980"/><polygon class="arrow-head" points="635,978 640,988 645,978"/></svg>
+
+  <div class="box tks" style="top: 990px; left: 530px; width: 220px; height: 70px; font-size: 13px; font-weight: 600;">
+    Virtual Bring-Up and Validation
+  </div>
+
+  <!-- Tagging workstream arrow into TKS -->
+  <svg class="arrows">
+    <line class="arrow-line tagging-arrow" x1="1310" y1="980" x2="1310" y2="1025"/>
+    <line class="arrow-line tagging-arrow" x1="1310" y1="1025" x2="752" y2="1025"/>
+    <polygon class="arrow-head tagging-head" points="754,1020 744,1025 754,1030"/>
+  </svg>
+
+  <!-- STEP 5: Launch -->
+  <div class="step-label" style="top: 1080px; left: 610px;">Step 5</div>
+  <svg class="arrows"><line class="arrow-line" x1="640" y1="1060" x2="640" y2="1100"/><polygon class="arrow-head" points="635,1098 640,1108 645,1098"/></svg>
+
+  <div class="box launch" style="top: 1110px; left: 575px; width: 130px; height: 45px; font-size: 14px;">
+    Launch
+  </div>
+
+  <!-- Legend -->
+  <div style="position: absolute; top: 1180px; left: 530px; font-size: 11px; color: #999;">
+    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+      <div style="width: 30px; height: 3px; background: #888;"></div>
+      <span>Existing workflow</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+      <div style="width: 30px; height: 3px; background: #4ea8de;"></div>
+      <span>New RFID Tagging workstream</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+      <div style="width: 20px; height: 16px; background: #1a2a38; border: 1px solid #4ea8de; border-radius: 3px;"></div>
+      <span>New tagging steps</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <div style="width: 20px; height: 16px; background: #2a2a2a; border: 1px solid #555; border-radius: 3px;"></div>
+      <span>Existing steps</span>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

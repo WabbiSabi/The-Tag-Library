@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scan, Validate, &amp; Print — Quick SOP</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, 'Segoe UI', Arial, sans-serif;
+    background: #f5f5f5;
+    color: #1a1a1a;
+    line-height: 1.5;
+    padding: 24px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  h1 {
+    font-size: 1.6rem;
+    margin-bottom: 4px;
+  }
+  .subtitle {
+    color: #555;
+    font-size: 0.95rem;
+    margin-bottom: 24px;
+  }
+  .subtitle code {
+    background: #fee2e2;
+    color: #b91c1c;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+  .step {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  .step h2 {
+    font-size: 1.15rem;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .step-num {
+    background: #2563eb;
+    color: #fff;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .step ol {
+    padding-left: 20px;
+    margin-top: 12px;
+  }
+  .step ol li {
+    margin-bottom: 4px;
+    font-size: 0.95rem;
+  }
+  .step ol li strong { color: #1e40af; }
+  .callout {
+    background: #fef9c3;
+    border-left: 4px solid #ca8a04;
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-top: 12px;
+    font-size: 0.9rem;
+    color: #713f12;
+  }
+  .callout.info {
+    background: #eff6ff;
+    border-left-color: #2563eb;
+    color: #1e3a5f;
+  }
+  .callout.danger {
+    background: #fef2f2;
+    border-left-color: #dc2626;
+    color: #7f1d1d;
+  }
+  .fixes {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  .fixes h2 { font-size: 1.15rem; margin-bottom: 12px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  th {
+    text-align: left;
+    background: #f1f5f9;
+    padding: 8px 10px;
+    border-bottom: 2px solid #cbd5e1;
+  }
+  td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: top;
+  }
+  .diagram {
+    display: flex;
+    justify-content: center;
+    margin: 16px 0;
+  }
+  .footer {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: 20px;
+  }
+  .footer a { color: #2563eb; }
+  @media print {
+    body { padding: 0; background: #fff; }
+    .step, .fixes { box-shadow: none; border: 1px solid #ddd; break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Scan, Validate, &amp; Print — Quick SOP</h1>
+<p class="subtitle">App: <code>IhmCandyCane</code> &nbsp;|&nbsp; Device: Zebra TC Handheld &nbsp;|&nbsp; Printer: Zebra ZD621R</p>
+
+<!-- STEP 1: Enable Bluetooth -->
+<div class="step">
+  <h2><span class="step-num">1</span> Enable Bluetooth</h2>
+  <div class="diagram">
+    <svg xmlns="http://www.w3.org/2000/svg" width="140" height="220" viewBox="0 0 160 260">
+      <rect x="20" y="5" width="120" height="250" rx="14" fill="#2a2a2a" stroke="#1a1a1a" stroke-width="2"/>
+      <rect x="28" y="30" width="104" height="200" rx="4" fill="#f5f0e8"/>
+      <rect x="28" y="30" width="104" height="16" fill="#1a1a1a" rx="4"/>
+      <text x="112" y="42" font-family="Arial" font-size="8" fill="white">9:41</text>
+      <rect x="28" y="46" width="104" height="22" fill="#3a3a3a"/>
+      <text x="34" y="60" font-family="Arial" font-size="9" font-weight="bold" fill="white">Settings</text>
+      <circle cx="118" cy="57" r="6" fill="none" stroke="white" stroke-width="1.5"/>
+      <circle cx="118" cy="57" r="2" fill="white"/>
+      <rect x="100" y="51" width="12" height="12" rx="2" fill="none" stroke="#3498db" stroke-width="2"/>
+      <rect x="28" y="74" width="104" height="30" fill="white"/>
+      <line x1="28" y1="104" x2="132" y2="104" stroke="#e5e0d8" stroke-width="0.5"/>
+      <path d="M48,84 L55,78 L51,74 L51,98 L55,94 L48,88" fill="none" stroke="#3498db" stroke-width="2" stroke-linejoin="round"/>
+      <text x="62" y="92" font-family="Arial" font-size="8" font-weight="bold" fill="#3498db">Bluetooth ON</text>
+      <polyline points="120,84 124,90 132,78" fill="none" stroke="#2ecc71" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="65" y="14" width="30" height="3" rx="1.5" fill="#444"/>
+      <circle cx="58" cy="16" r="2.5" fill="#444"/>
+    </svg>
+  </div>
+  <ol>
+    <li>Tap the <strong>square icon</strong> next to the ⚙ symbol</li>
+    <li>Verify <strong>Bluetooth is enabled</strong> (icon should be blue)</li>
+    <li>Exit the menu</li>
+  </ol>
+</div>
+
+<!-- STEP 2: Open IhmCandyCane App -->
+<div class="step">
+  <h2><span class="step-num">2</span> Open IhmCandyCane App</h2>
+  <div class="diagram">
+    <svg xmlns="http://www.w3.org/2000/svg" width="140" height="170" viewBox="0 0 160 200">
+      <rect x="20" y="5" width="120" height="190" rx="14" fill="#2a2a2a" stroke="#1a1a1a" stroke-width="2"/>
+      <rect x="28" y="28" width="104" height="150" rx="4" fill="#f5f0e8"/>
+      <rect x="40" y="50" width="30" height="30" rx="6" fill="#e74c3c"/>
+      <text x="48" y="70" font-family="Arial" font-size="14" fill="white">🍬</text>
+      <text x="38" y="92" font-family="Arial" font-size="6" fill="#333">CandyCane</text>
+      <rect x="85" y="50" width="30" height="30" rx="6" fill="#95a5a6"/>
+      <text x="95" y="70" font-family="Arial" font-size="10" fill="white">⚙</text>
+      <text x="88" y="92" font-family="Arial" font-size="6" fill="#333">Settings</text>
+      <ellipse cx="55" cy="65" rx="22" ry="22" fill="none" stroke="#f0a030" stroke-width="1.5" stroke-dasharray="3,2"/>
+      <rect x="65" y="12" width="30" height="3" rx="1.5" fill="#444"/>
+    </svg>
+  </div>
+  <ol>
+    <li>Find and open the <strong>IhmCandyCane</strong> app on the home screen</li>
+  </ol>
+</div>
+
+<!-- STEP 3: Find Bluetooth MAC Address -->
+<div class="step">
+  <h2><span class="step-num">3</span> Find Printer MAC Address</h2>
+  <div class="diagram">
+    <svg xmlns="http://www.w3.org/2000/svg" width="240" height="100" viewBox="0 0 260 120">
+      <rect x="10" y="20" width="140" height="80" rx="6" fill="#888" stroke="#555" stroke-width="2"/>
+      <rect x="30" y="35" width="60" height="35" rx="3" fill="#2c3e50"/>
+      <rect x="33" y="38" width="54" height="28" rx="2" fill="#111"/>
+      <text x="37" y="50" font-family="Arial" font-size="6" font-weight="bold" fill="#00ff88">Printer Info</text>
+      <text x="37" y="60" font-family="Arial" font-size="5" fill="#00ff88">BT MAC:</text>
+      <text x="37" y="68" font-family="Arial" font-size="5" fill="#00ff88">AC:3F:A4:12:BB:01</text>
+      <text x="100" y="75" font-family="Arial" font-size="7" fill="#555">ZEBRA</text>
+      <line x1="160" y1="55" x2="180" y2="55" stroke="#333" stroke-width="2"/>
+      <polygon points="180,50 190,55 180,60" fill="#333"/>
+      <rect x="195" y="30" width="60" height="50" rx="4" fill="white" stroke="#3498db" stroke-width="2"/>
+      <text x="200" y="48" font-family="Arial" font-size="7" font-weight="bold" fill="#333">MAC Address</text>
+      <text x="200" y="62" font-family="Arial" font-size="6" fill="#3498db">AC:3F:A4:</text>
+      <text x="200" y="72" font-family="Arial" font-size="6" fill="#3498db">12:BB:01</text>
+    </svg>
+  </div>
+  <ol>
+    <li>On the Zebra printer, navigate to <strong>Printer Info</strong> on the display screen</li>
+    <li>Note down the <strong>Bluetooth MAC Address</strong> — you'll need it for pairing</li>
+  </ol>
+</div>
+
+<!-- STEP 4: Navigate to Scan, Validate, & Print -->
+<div class="step">
+  <h2><span class="step-num">4</span> Open Scan, Validate, &amp; Print</h2>
+  <div class="diagram">
+    <svg xmlns="http://www.w3.org/2000/svg" width="200" height="360" viewBox="0 0 200 380">
+      <!-- TC Device body -->
+      <rect x="20" y="5" width="160" height="370" rx="16" fill="#1a1a1a" stroke="#111" stroke-width="2"/>
+      <rect x="28" y="28" width="144" height="325" rx="4" fill="#555"/>
+      <!-- Status bar -->
+      <rect x="28" y="28" width="144" height="16" fill="#333" rx="4"/>
+      <text x="148" y="40" font-family="Arial" font-size="8" fill="white">12:30</text>
+      <!-- Side panel (white drawer) -->
+      <rect x="28" y="44" width="110" height="290" fill="white"/>
+      <!-- Close X -->
+      <text x="120" y="58" font-family="Arial" font-size="12" fill="#333">✕</text>
+      <!-- Just Walk Out header -->
+      <text x="36" y="68" font-family="Arial" font-size="10" font-weight="bold" fill="#1a1a1a">Just Walk Out</text>
+      <line x1="36" y1="74" x2="130" y2="74" stroke="#ddd" stroke-width="0.5"/>
+      <!-- Store Tools section -->
+      <text x="44" y="90" font-family="Arial" font-size="8" fill="#333">▾ Store Tools</text>
+      <!-- Menu items -->
+      <text x="56" y="108" font-family="Arial" font-size="7" fill="#555">Assisted Shopping</text>
+      <text x="56" y="122" font-family="Arial" font-size="7" fill="#555">Associate Entry</text>
+      <text x="56" y="136" font-family="Arial" font-size="7" fill="#555">Bootstrap Dashboard</text>
+      <text x="56" y="150" font-family="Arial" font-size="7" fill="#555">Customer Returns</text>
+      <text x="56" y="164" font-family="Arial" font-size="7" fill="#555">Manage Users</text>
+      <text x="56" y="178" font-family="Arial" font-size="7" fill="#aaa">Price Check…</text>
+      <!-- Highlighted: Scan, Validate & Print -->
+      <rect x="32" y="186" width="102" height="22" rx="2" fill="#f5f5f5" stroke="#dc2626" stroke-width="2.5"/>
+      <text x="40" y="200" font-family="Arial" font-size="7.5" font-weight="bold" fill="#dc2626">Scan, Validate &amp; Print</text>
+      <!-- More items below -->
+      <text x="56" y="224" font-family="Arial" font-size="7" fill="#aaa">Product Placement…</text>
+      <line x1="36" y1="234" x2="130" y2="234" stroke="#ddd" stroke-width="0.5"/>
+      <!-- Tech Configuration section -->
+      <text x="36" y="250" font-family="Arial" font-size="8" font-weight="bold" fill="#1a1a1a">Tech Configuration</text>
+      <text x="44" y="268" font-family="Arial" font-size="7" fill="#555">› General</text>
+      <!-- Android nav bar -->
+      <polygon points="68,340 78,350 58,350" fill="none" stroke="#888" stroke-width="1.5"/>
+      <circle cx="100" cy="345" r="6" fill="none" stroke="#888" stroke-width="1.5"/>
+      <rect x="122" y="339" width="12" height="12" rx="2" fill="none" stroke="#888" stroke-width="1.5"/>
+      <!-- Notch -->
+      <rect x="80" y="14" width="40" height="3" rx="1.5" fill="#333"/>
+    </svg>
+  </div>
+  <ol>
+    <li>Tap the <strong>☰ menu</strong> in the top-left corner</li>
+    <li>Under <strong>Just Walk Out › Store Tools</strong>, scroll down</li>
+    <li>Select <strong>Scan, Validate &amp; Print</strong></li>
+  </ol>
+</div>
+
+<!-- STEP 5: Pair Printer -->
+<div class="step">
+  <h2><span class="step-num">5</span> Pair Printer</h2>
+  <div class="diagram">
+    <svg xmlns="http://www.w3.org/2000/svg" width="200" height="380" viewBox="0 0 200 400">
+      <!-- TC Device body -->
+      <rect x="20" y="5" width="160" height="390" rx="16" fill="#1a1a1a" stroke="#111" stroke-width="2"/>
+      <rect x="28" y="28" width="144" height="340" rx="4" fill="#f5f5f5"/>
+      <!-- Status bar -->
+      <rect x="28" y="28" width="144" height="16" fill="#333" rx="4"/>
+      <text x="148" y="40" font-family="Arial" font-size="8" fill="white">12:30</text>
+      <!-- Header bar — dark -->
+      <rect x="28" y="44" width="144" height="24" fill="#37474f"/>
+      <text x="40" y="54" font-family="Arial" font-size="8" fill="white">☰</text>
+      <text x="54" y="59" font-family="Arial" font-size="9" font-weight="bold" fill="white">Scan, Validate &amp; Print</text>
+      <text x="152" y="59" font-family="Arial" font-size="9" fill="white">🔍</text>
+      <!-- Info icon + Disconnected badge -->
+      <circle cx="40" cy="82" r="7" fill="none" stroke="#37474f" stroke-width="1.5"/>
+      <text x="38" y="85" font-family="Arial" font-size="8" font-weight="bold" fill="#37474f">i</text>
+      <rect x="120" y="74" width="48" height="16" rx="8" fill="none" stroke="#e6a817" stroke-width="1.5"/>
+      <circle cx="130" cy="82" r="3.5" fill="#e6a817"/>
+      <text x="136" y="86" font-family="Arial" font-size="6" fill="#e6a817">Disconnected</text>
+      <!-- Scan prompt -->
+      <text x="36" y="112" font-family="Arial" font-size="8" font-weight="bold" fill="#1a1a1a">Scan the barcode on the</text>
+      <text x="36" y="124" font-family="Arial" font-size="8" font-weight="bold" fill="#1a1a1a">product tag</text>
+      <!-- Tag image placeholder -->
+      <rect x="80" y="132" width="60" height="40" rx="4" fill="#e0e0e0" stroke="#ccc" stroke-width="1"/>
+      <polygon points="110,138 130,162 90,162" fill="#bbb"/>
+      <!-- Divider -->
+      <line x1="28" y1="180" x2="172" y2="180" stroke="#ddd" stroke-width="1"/>
+      <!-- Close X on bottom sheet -->
+      <text x="160" y="194" font-family="Arial" font-size="10" fill="#999">✕</text>
+      <!-- MAC Address input -->
+      <text x="36" y="204" font-family="Arial" font-size="8" font-style="italic" fill="#333">Enter Mac Address of Printer</text>
+      <rect x="36" y="210" width="128" height="24" rx="4" fill="white" stroke="#ccc" stroke-width="1"/>
+      <text x="42" y="226" font-family="Arial" font-size="8" fill="#999">00:22:33:CC:DD</text>
+      <!-- Pair button (teal, highlighted) -->
+      <rect x="32" y="248" width="136" height="32" rx="4" fill="#0097a7"/>
+      <text x="82" y="269" font-family="Arial" font-size="10" font-weight="bold" fill="white">Pair</text>
+      <!-- Red highlight border around Pair button -->
+      <rect x="28" y="244" width="144" height="40" rx="6" fill="none" stroke="#dc2626" stroke-width="2.5"/>
+      <!-- Pairing status -->
+      <text x="52" y="308" font-family="Arial" font-size="8" font-style="italic" fill="#555">Pairing with printer</text>
+      <!-- Progress bar -->
+      <rect x="52" y="316" width="96" height="6" rx="3" fill="#e0e0e0"/>
+      <rect x="52" y="316" width="56" height="6" rx="3" fill="#0097a7"/>
+      <!-- Android nav bar -->
+      <polygon points="68,358 78,368 58,368" fill="none" stroke="#888" stroke-width="1.5"/>
+      <circle cx="100" cy="363" r="6" fill="none" stroke="#888" stroke-width="1.5"/>
+      <rect x="122" y="357" width="12" height="12" rx="2" fill="none" stroke="#888" stroke-width="1.5"/>
+      <!-- Notch -->
+      <rect x="80" y="14" width="40" height="3" rx="1.5" fill="#333"/>
+    </svg>
+  </div>
+  <ol>
+    <li>The <strong>Scan, Validate &amp; Print</strong> screen will show <strong>"Disconnected"</strong> (orange badge)</li>
+    <li>A bottom panel will prompt: <strong>Enter Mac Address of Printer</strong></li>
+    <li>Type the MAC address from the printer using colons (e.g. <code>00:22:33:CC:DD</code>)</li>
+    <li>Tap the <strong>Pair</strong> button</li>
+    <li>Wait for <strong>"Pairing with printer"</strong> progress bar to complete</li>
+    <li>Status badge will change from "Disconnected" to <strong>"Connected"</strong></li>
+  </ol>
+  <div class="callout">⚠️ If pairing fails, tap the <strong>Recent Apps icon</strong> in the upper right, confirm the Bluetooth icon is blue, then try again.</div>
+</div>
+
+<!-- STEP 6: Scan and Print -->
+<div class="step">
+  <h2><span class="step-num">6</span> Scan &amp; Print Tags</h2>
+  <div class="diagram">
+    <svg xmlns="http://www.w3.org/2000/svg" width="260" height="120" viewBox="0 0 280 140">
+      <rect x="10" y="15" width="60" height="110" rx="8" fill="#2a2a2a" stroke="#1a1a1a" stroke-width="2"/>
+      <rect x="15" y="28" width="50" height="85" rx="2" fill="#f5f0e8"/>
+      <rect x="0" y="55" width="10" height="20" rx="2" fill="#f1c40f" stroke="#d4ac0d" stroke-width="1"/>
+      <line x1="40" y1="113" x2="40" y2="130" stroke="#e74c3c" stroke-width="2"/>
+      <line x1="30" y1="130" x2="50" y2="130" stroke="#e74c3c" stroke-width="1.5"/>
+      <rect x="25" y="132" width="30" height="8" rx="1" fill="white" stroke="#333" stroke-width="1"/>
+      <line x1="28" y1="134" x2="28" y2="138" stroke="#333" stroke-width="0.8"/>
+      <line x1="30" y1="134" x2="30" y2="138" stroke="#333" stroke-width="1.2"/>
+      <line x1="33" y1="134" x2="33" y2="138" stroke="#333" stroke-width="0.6"/>
+      <line x1="35" y1="134" x2="35" y2="138" stroke="#333" stroke-width="1"/>
+      <line x1="37" y1="134" x2="37" y2="138" stroke="#333" stroke-width="0.5"/>
+      <line x1="39" y1="134" x2="39" y2="138" stroke="#333" stroke-width="1.2"/>
+      <line x1="41" y1="134" x2="41" y2="138" stroke="#333" stroke-width="0.7"/>
+      <line x1="43" y1="134" x2="43" y2="138" stroke="#333" stroke-width="0.9"/>
+      <line x1="45" y1="134" x2="45" y2="138" stroke="#333" stroke-width="0.5"/>
+      <line x1="47" y1="134" x2="47" y2="138" stroke="#333" stroke-width="1.1"/>
+      <line x1="49" y1="134" x2="49" y2="138" stroke="#333" stroke-width="0.8"/>
+      <line x1="51" y1="134" x2="51" y2="138" stroke="#333" stroke-width="1"/>
+      <line x1="80" y1="65" x2="105" y2="65" stroke="#333" stroke-width="2"/>
+      <polygon points="105,60 115,65 105,70" fill="#333"/>
+      <rect x="120" y="15" width="70" height="110" rx="8" fill="#2a2a2a" stroke="#1a1a1a" stroke-width="2"/>
+      <rect x="126" y="28" width="58" height="85" rx="2" fill="#f5f0e8"/>
+      <rect x="132" y="34" width="46" height="30" rx="2" fill="white" stroke="#ddd" stroke-width="1"/>
+      <text x="142" y="53" font-family="Arial" font-size="8" fill="#999">📦</text>
+      <text x="132" y="76" font-family="Arial" font-size="6" fill="#333">Product Name</text>
+      <text x="132" y="88" font-family="Arial" font-size="6" fill="#333">Qty:</text>
+      <rect x="148" y="82" width="10" height="10" rx="2" fill="white" stroke="#333" stroke-width="1"/>
+      <text x="151" y="90" font-family="Arial" font-size="7" fill="#333">1</text>
+      <text x="160" y="90" font-family="Arial" font-size="8" fill="#333">+ -</text>
+      <rect x="132" y="96" width="46" height="14" rx="7" fill="#2ecc71"/>
+      <text x="143" y="106" font-family="Arial" font-size="7" font-weight="bold" fill="white">Print</text>
+      <line x1="200" y1="65" x2="220" y2="65" stroke="#333" stroke-width="2"/>
+      <polygon points="220,60 230,65 220,70" fill="#333"/>
+      <rect x="235" y="35" width="40" height="30" rx="4" fill="#888" stroke="#555" stroke-width="1.5"/>
+      <rect x="235" y="30" width="40" height="8" rx="3" fill="#999" stroke="#555" stroke-width="1"/>
+      <text x="243" y="55" font-family="Arial" font-size="5" fill="#555">ZEBRA</text>
+      <rect x="245" y="66" width="20" height="30" rx="1" fill="white" stroke="#333" stroke-width="1"/>
+      <line x1="248" y1="72" x2="262" y2="72" stroke="#999" stroke-width="0.8"/>
+      <line x1="248" y1="76" x2="258" y2="76" stroke="#999" stroke-width="0.8"/>
+      <rect x="250" y="80" width="12" height="8" rx="1" fill="none" stroke="#333" stroke-width="0.8"/>
+      <line x1="252" y1="82" x2="252" y2="86" stroke="#333" stroke-width="0.5"/>
+      <line x1="254" y1="82" x2="254" y2="86" stroke="#333" stroke-width="0.8"/>
+      <line x1="256" y1="82" x2="256" y2="86" stroke="#333" stroke-width="0.5"/>
+      <line x1="258" y1="82" x2="258" y2="86" stroke="#333" stroke-width="0.7"/>
+    </svg>
+  </div>
+  <ol>
+    <li>Press the <strong>side button</strong> on the handheld to scan the product barcode</li>
+    <li>Adjust the <strong>quantity</strong> using the + / − buttons</li>
+    <li><strong>Verify</strong> the product on screen matches what you scanned</li>
+    <li>Tap <strong>Print</strong></li>
+    <li>Collect all printed tags from the printer</li>
+  </ol>
+</div>
+
+<!-- STEP 6a: PICT — Product Image Capture -->
+<div class="step">
+  <h2><span class="step-num" style="background:#e67e22;">6a</span> Image Not Found? Use PICT</h2>
+  <div class="callout">⚠️ If the product has no image on file, the TC device will automatically redirect you to <strong>Product Image Capture (PICT)</strong>. You must upload images before you can print a tag.</div>
+  <div class="diagram">
+    <svg xmlns="http://www.w3.org/2000/svg" width="220" height="360" viewBox="0 0 220 360">
+      <!-- TC Device body -->
+      <rect x="30" y="5" width="160" height="350" rx="16" fill="#2a2a2a" stroke="#1a1a1a" stroke-width="2"/>
+      <rect x="40" y="30" width="140" height="300" rx="4" fill="#f5f0e8"/>
+      <!-- Status bar -->
+      <rect x="40" y="30" width="140" height="16" fill="#1a1a1a" rx="4"/>
+      <text x="155" y="42" font-family="Arial" font-size="8" fill="white">12:30</text>
+      <!-- Header bar -->
+      <rect x="40" y="46" width="140" height="22" fill="#37474f"/>
+      <text x="48" y="60" font-family="Arial" font-size="8" font-weight="bold" fill="white">☰ Product Image Capture</text>
+      <!-- Sub-header -->
+      <rect x="40" y="68" width="140" height="18" fill="#eceff1"/>
+      <text x="48" y="80" font-family="Arial" font-size="7" fill="#555">‹ Upload product images</text>
+      <!-- Product info -->
+      <rect x="40" y="86" width="140" height="48" fill="white"/>
+      <text x="48" y="100" font-family="Arial" font-size="8" font-weight="bold" fill="#1a1a1a">Product Name</text>
+      <text x="48" y="112" font-family="Arial" font-size="6" fill="#666">UPC: 712348391234</text>
+      <text x="48" y="122" font-family="Arial" font-size="6" fill="#666">SKU: L123A456</text>
+      <text x="48" y="132" font-family="Arial" font-size="6" fill="#666">$29.99 ea</text>
+      <line x1="40" y1="134" x2="180" y2="134" stroke="#e0e0e0" stroke-width="0.5"/>
+      <!-- Upload instructions -->
+      <text x="48" y="150" font-family="Arial" font-size="7" font-weight="bold" fill="#333">Upload product images</text>
+      <text x="48" y="162" font-family="Arial" font-size="6" fill="#888">Only upload one set of images per style,</text>
+      <text x="48" y="172" font-family="Arial" font-size="6" fill="#888">regardless of size.</text>
+      <!-- Front image placeholder -->
+      <rect x="48" y="180" width="60" height="72" rx="4" fill="#e8f5e9" stroke="#a5d6a7" stroke-width="1"/>
+      <text x="60" y="210" font-family="Arial" font-size="10" fill="#66bb6a">📷</text>
+      <text x="56" y="228" font-family="Arial" font-size="6" fill="#388e3c">FRONT</text>
+      <text x="55" y="242" font-family="Arial" font-size="6" fill="#999">✓</text>
+      <!-- Back image placeholder -->
+      <rect x="116" y="180" width="60" height="72" rx="4" fill="#e8f5e9" stroke="#a5d6a7" stroke-width="1"/>
+      <text x="128" y="210" font-family="Arial" font-size="10" fill="#66bb6a">📷</text>
+      <text x="126" y="228" font-family="Arial" font-size="6" fill="#388e3c">BACK</text>
+      <text x="125" y="242" font-family="Arial" font-size="6" fill="#999">✓</text>
+      <!-- Retake buttons -->
+      <rect x="48" y="258" width="60" height="18" rx="4" fill="white" stroke="#bbb" stroke-width="1"/>
+      <text x="60" y="270" font-family="Arial" font-size="7" fill="#555">Retake</text>
+      <rect x="116" y="258" width="60" height="18" rx="4" fill="white" stroke="#bbb" stroke-width="1"/>
+      <text x="128" y="270" font-family="Arial" font-size="7" fill="#555">Retake</text>
+      <!-- Upload button -->
+      <rect x="48" y="290" width="128" height="26" rx="6" fill="#0097a7"/>
+      <text x="88" y="307" font-family="Arial" font-size="9" font-weight="bold" fill="white">Upload</text>
+      <!-- Notch -->
+      <rect x="90" y="14" width="40" height="3" rx="1.5" fill="#444"/>
+    </svg>
+  </div>
+  <ol>
+    <li>The device will open <strong>Product Image Capture (PICT)</strong> automatically</li>
+    <li>Take a clear photo of the <strong>front</strong> of the item</li>
+    <li>Take a clear photo of the <strong>back</strong> of the item</li>
+    <li>Review both images — use <strong>Retake</strong> if either photo is unclear</li>
+    <li>Tap <strong>Upload</strong> to submit the images</li>
+    <li>Once uploaded, you'll be returned to the print screen to continue</li>
+  </ol>
+  <div class="callout info">💡 You will need to <strong>re-photograph the same product for different sizes</strong>. Each size requires its own set of images.</div>
+</div>
+
+<!-- STEP 6b: Not Printable — Failed Validations -->
+<div class="step">
+  <h2><span class="step-num" style="background:#dc2626;">6b</span> "Not Printable" — Failed Validations</h2>
+  <div class="callout danger">🚫 If the item isn't ready to be printed, you'll see a <strong>"Not Printable"</strong> screen with validation details. Follow the on-screen guidance to resolve.</div>
+  <div class="diagram">
+    <svg xmlns="http://www.w3.org/2000/svg" width="200" height="400" viewBox="0 0 200 420">
+      <!-- TC Device body -->
+      <rect x="20" y="5" width="160" height="410" rx="16" fill="#1a1a1a" stroke="#111" stroke-width="2"/>
+      <rect x="28" y="28" width="144" height="360" rx="4" fill="#f5f5f5"/>
+      <!-- Status bar -->
+      <rect x="28" y="28" width="144" height="16" fill="#333" rx="4"/>
+      <text x="148" y="40" font-family="Arial" font-size="8" fill="white">12:30</text>
+      <!-- Header bar -->
+      <rect x="28" y="44" width="144" height="24" fill="#37474f"/>
+      <text x="40" y="59" font-family="Arial" font-size="8" fill="white">☰</text>
+      <text x="54" y="59" font-family="Arial" font-size="9" font-weight="bold" fill="white">Scan, Validate &amp; Print</text>
+      <text x="152" y="59" font-family="Arial" font-size="9" fill="white">🔍</text>
+      <!-- Info banner -->
+      <rect x="28" y="68" width="144" height="28" fill="#e8eaf6"/>
+      <circle cx="40" cy="82" r="6" fill="none" stroke="#5c6bc0" stroke-width="1.5"/>
+      <text x="38" y="85" font-family="Arial" font-size="7" font-weight="bold" fill="#5c6bc0">i</text>
+      <text x="50" y="79" font-family="Arial" font-size="6" fill="#333">To resolve the error, click on the</text>
+      <text x="50" y="89" font-family="Arial" font-size="6" fill="#333">arrow in the red box.</text>
+      <!-- Red exclamation circle -->
+      <circle cx="100" cy="126" r="22" fill="#f8bbd0" stroke="#e91e63" stroke-width="2.5"/>
+      <text x="96" y="134" font-family="Arial" font-size="18" font-weight="bold" fill="#c62828">!</text>
+      <!-- Not Printable text -->
+      <text x="52" y="170" font-family="Arial" font-size="14" font-weight="bold" fill="#1a1a1a">Not Printable</text>
+      <text x="42" y="188" font-family="Arial" font-size="8" fill="#666">Barcode Failed Validations</text>
+      <!-- Product validation checks — green (passed) -->
+      <rect x="36" y="206" width="128" height="30" rx="6" fill="#e8f5e9" stroke="#c8e6c9" stroke-width="1"/>
+      <circle cx="50" cy="221" r="7" fill="#4caf50"/>
+      <text x="47" y="224" font-family="Arial" font-size="8" font-weight="bold" fill="white">✓</text>
+      <text x="62" y="224" font-family="Arial" font-size="8" fill="#333">Product validation checks</text>
+      <text x="152" y="224" font-family="Arial" font-size="10" fill="#999">›</text>
+      <!-- Image validation checks — pink/red (failed) -->
+      <rect x="36" y="246" width="128" height="30" rx="6" fill="#fce4ec" stroke="#f8bbd0" stroke-width="1"/>
+      <circle cx="50" cy="261" r="7" fill="#e53935"/>
+      <text x="47" y="264" font-family="Arial" font-size="8" font-weight="bold" fill="white">!</text>
+      <text x="62" y="264" font-family="Arial" font-size="8" fill="#333">Image validation checks</text>
+      <text x="152" y="264" font-family="Arial" font-size="10" fill="#c62828">›</text>
+      <!-- Red highlight around image validation arrow -->
+      <rect x="144" y="250" width="22" height="22" rx="4" fill="none" stroke="#dc2626" stroke-width="2.5"/>
+      <!-- Done button -->
+      <rect x="36" y="296" width="128" height="30" rx="4" fill="#0097a7"/>
+      <text x="82" y="315" font-family="Arial" font-size="10" font-weight="bold" fill="white">Done</text>
+      <!-- Android nav bar -->
+      <polygon points="68,378 78,388 58,388" fill="none" stroke="#888" stroke-width="1.5"/>
+      <circle cx="100" cy="383" r="6" fill="none" stroke="#888" stroke-width="1.5"/>
+      <rect x="122" y="377" width="12" height="12" rx="2" fill="none" stroke="#888" stroke-width="1.5"/>
+      <!-- Notch -->
+      <rect x="80" y="14" width="40" height="3" rx="1.5" fill="#333"/>
+    </svg>
+  </div>
+  <ol>
+    <li>If you see <strong>"Not Printable — Barcode Failed Validations"</strong>, check the two validation rows:</li>
+  </ol>
+  <table style="margin-top:12px;">
+    <thead><tr><th>Validation</th><th>Status</th><th>What to Do</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Product validation checks</td>
+        <td style="color:#4caf50;">✓ Passed (green)</td>
+        <td>No action needed</td>
+      </tr>
+      <tr>
+        <td>Image validation checks</td>
+        <td style="color:#e53935;">⚠ Failed (red)</td>
+        <td>Tap the <strong>›</strong> arrow to open PICT and upload front + back photos (see Step 6a)</td>
+      </tr>
+      <tr>
+        <td>Product validation checks</td>
+        <td style="color:#e53935;">⚠ Failed (red)</td>
+        <td>Product is missing from catalog — <strong>Location Manager</strong> must update it in the Merchant Portal</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="callout info">💡 The info banner at the top says: <strong>"To resolve the error, click on the arrow in the red box."</strong> Tap the <strong>›</strong> next to the failed check to begin resolving it.</div>
+</div>
+
+<!-- TROUBLESHOOTING -->
+<div class="fixes">
+  <h2>⚡ Troubleshooting</h2>
+  <table>
+    <thead><tr><th>Problem</th><th>Fix</th></tr></thead>
+    <tbody>
+      <tr><td>Scan didn't work</td><td>Try scanning again. Check the product for another barcode. If none works, contact your <strong>Location Manager</strong>.</td></tr>
+      <tr><td>Bluetooth won't connect</td><td>Tap the <strong>Recent Apps icon</strong> (upper right). Confirm the Bluetooth icon is blue. Press Recent Apps again to return.</td></tr>
+      <tr><td>"Error Fetching EPCs"</td><td>Select <strong>"Retry Fetching EPC."</strong> If it persists, contact your <strong>Location Manager</strong>.</td></tr>
+      <tr><td>Product shows "Not Printable"</td><td><strong>Image Validation</strong> — tap ">" then "Upload/re-upload image."<br><strong>Product Validation</strong> — Location Manager must update it in the Merchant Portal.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- SUPPORT -->
+<div class="fixes">
+  <h2>📞 Support</h2>
+  <table>
+    <tbody>
+      <tr><td>Phone</td><td><strong>1-855-218-4421</strong></td></tr>
+      <tr><td>Email</td><td><strong>Just Walk Out technology support</strong></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<p class="footer">See also: <a href="../Zebra%20SOP/Zebra%20Printer%20Quick%20Setup.html">Zebra Printer Quick Setup SOP</a></p>
+
+</body>
+</html>

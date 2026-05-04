@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Customer Operations Launch Workflow</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #1a1a1a;
+    color: #e0e0e0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 12px;
+    padding: 40px;
+    min-width: 1600px;
+  }
+  h1 {
+    text-align: center;
+    font-size: 22px;
+    margin-bottom: 8px;
+    color: #fff;
+    font-weight: 600;
+  }
+  .subtitle {
+    text-align: center;
+    font-size: 13px;
+    color: #999;
+    margin-bottom: 40px;
+  }
+  .workflow {
+    position: relative;
+    width: 1500px;
+    margin: 0 auto;
+  }
+
+  /* Phase labels */
+  .phase-label {
+    position: absolute;
+    font-size: 11px;
+    font-weight: 700;
+    color: #f0a030;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* Boxes */
+  .box {
+    position: absolute;
+    background: #2a2a2a;
+    border: 1px solid #555;
+    border-radius: 6px;
+    padding: 10px 12px;
+    text-align: center;
+    font-size: 11px;
+    line-height: 1.45;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .box.phase {
+    border-color: #f0a030;
+    background: #2e2518;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  .box.rfid {
+    border-color: #4ea8de;
+    background: #1a2a38;
+  }
+  .box.training {
+    border-color: #6bcf7f;
+    background: #1a2e1f;
+  }
+  .box.risk {
+    border-color: #e05555;
+    background: #2e1a1a;
+  }
+  .box.goal {
+    border-color: #b07aed;
+    background: #231a2e;
+  }
+  .box.launch {
+    background: #333;
+    border-radius: 20px;
+    border-color: #777;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .box-title {
+    font-weight: 700;
+    font-size: 11px;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .box .sub {
+    font-size: 10px;
+    color: #bbb;
+    margin-top: 3px;
+    text-align: left;
+    width: 100%;
+  }
+  .box .sub li {
+    margin-left: 12px;
+    margin-bottom: 1px;
+  }
+
+  /* SVG arrows */
+  svg.arrows {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+  .arrow-line {
+    stroke: #888;
+    stroke-width: 1.5;
+    fill: none;
+  }
+  .arrow-line.rfid { stroke: #4ea8de; }
+  .arrow-line.training { stroke: #6bcf7f; }
+  .arrow-line.risk { stroke: #e05555; stroke-dasharray: 5,4; }
+  .arrow-head { fill: #888; }
+  .arrow-head.rfid { fill: #4ea8de; }
+  .arrow-head.training { fill: #6bcf7f; }
+
+  /* Section dividers */
+  .section-divider {
+    position: absolute;
+    width: 1480px;
+    left: 10px;
+    border-top: 1px dashed #444;
+  }
+  .section-title {
+    position: absolute;
+    left: 15px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #f0a030;
+    letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+
+<h1>New Customer Operations Launch Workflow</h1>
+<p class="subtitle">Consolidated from planning session — Agenda, Goals, Training, RFID Gap Analysis &amp; Risks</p>
+
+<div class="workflow" style="height: 2600px;">
+
+  <!-- ============================================ -->
+  <!-- PHASE 1: INTRODUCTIONS & PLAN REVIEW        -->
+  <!-- ============================================ -->
+  <div class="section-title" style="top: 0px;">Phase 1 — Introductions &amp; Plan Review</div>
+  <div class="section-divider" style="top: 20px;"></div>
+
+  <div class="box phase" style="top: 40px; left: 620px; width: 220px; height: 50px;">
+    1. Introductions
+  </div>
+
+  <!-- Arrow down -->
+  <svg class="arrows"><line class="arrow-line" x1="730" y1="90" x2="730" y2="120"/><polygon class="arrow-head" points="725,118 730,128 735,118"/></svg>
+
+  <div class="box phase" style="top: 130px; left: 570px; width: 320px; height: 50px;">
+    2. HB Reviews Existing Plan
+  </div>
+
+  <!-- Fan out from HB Review to sub-items -->
+  <svg class="arrows">
+    <!-- Center down then fan -->
+    <line class="arrow-line" x1="730" y1="180" x2="730" y2="210"/>
+    <line class="arrow-line" x1="730" y1="210" x2="130" y2="210"/>
+    <line class="arrow-line" x1="730" y1="210" x2="380" y2="210"/>
+    <line class="arrow-line" x1="730" y1="210" x2="630" y2="210"/>
+    <line class="arrow-line" x1="730" y1="210" x2="880" y2="210"/>
+    <line class="arrow-line" x1="730" y1="210" x2="1130" y2="210"/>
+    <line class="arrow-line" x1="730" y1="210" x2="1350" y2="210"/>
+    <!-- Down arrows -->
+    <line class="arrow-line" x1="130" y1="210" x2="130" y2="230"/><polygon class="arrow-head" points="125,228 130,238 135,228"/>
+    <line class="arrow-line" x1="380" y1="210" x2="380" y2="230"/><polygon class="arrow-head" points="375,228 380,238 385,228"/>
+    <line class="arrow-line" x1="630" y1="210" x2="630" y2="230"/><polygon class="arrow-head" points="625,228 630,238 635,228"/>
+    <line class="arrow-line" x1="880" y1="210" x2="880" y2="230"/><polygon class="arrow-head" points="875,228 880,238 885,228"/>
+    <line class="arrow-line" x1="1130" y1="210" x2="1130" y2="230"/><polygon class="arrow-head" points="1125,228 1130,238 1135,228"/>
+    <line class="arrow-line" x1="1350" y1="210" x2="1350" y2="230"/><polygon class="arrow-head" points="1345,228 1350,238 1355,228"/>
+  </svg>
+
+  <div class="box" style="top: 240px; left: 40px; width: 180px; height: 70px;">
+    <div class="box-title">Merch Logistics &amp; Dates</div>
+    <div class="sub">Sortation &amp; distribution plans</div>
+  </div>
+  <div class="box" style="top: 240px; left: 280px; width: 200px; height: 70px;">
+    <div class="box-title">Labor Pool / Plan</div>
+    <ul class="sub"><li>Warehouse staffing</li><li>At venue staffing</li></ul>
+  </div>
+  <div class="box" style="top: 240px; left: 540px; width: 180px; height: 70px;">
+    <div class="box-title">BOH Ops Plan</div>
+    <div class="sub">Back-of-house operations</div>
+  </div>
+  <div class="box" style="top: 240px; left: 780px; width: 200px; height: 70px;">
+    <div class="box-title">FOH Ops Plan</div>
+    <div class="sub">Front-of-house operations</div>
+  </div>
+  <div class="box" style="top: 240px; left: 1040px; width: 190px; height: 70px;">
+    <div class="box-title">Interstore Ops</div>
+    <div class="sub">Logistics &amp; replenishment</div>
+  </div>
+  <div class="box" style="top: 240px; left: 1270px; width: 170px; height: 70px;">
+    <div class="box-title">Reporting Reqs</div>
+    <ul class="sub"><li>Inventory tracking</li><li>Sales reporting</li></ul>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- PHASE 2: RFID GAP ANALYSIS                  -->
+  <!-- ============================================ -->
+  <div class="section-title" style="top: 350px;">Phase 2 — RFID Gap Analysis</div>
+  <div class="section-divider" style="top: 370px;"></div>
+
+  <!-- Converge arrow -->
+  <svg class="arrows">
+    <line class="arrow-line rfid" x1="730" y1="310" x2="730" y2="400"/>
+    <polygon class="arrow-head rfid" points="725,398 730,408 735,398"/>
+  </svg>
+
+  <div class="box rfid" style="top: 410px; left: 580px; width: 300px; height: 45px;">
+    <div class="box-title" style="color: #4ea8de;">3. RFID Gap Analysis</div>
+  </div>
+
+  <!-- Fan out to RFID sub-items -->
+  <svg class="arrows">
+    <line class="arrow-line rfid" x1="730" y1="455" x2="730" y2="480"/>
+    <line class="arrow-line rfid" x1="730" y1="480" x2="160" y2="480"/>
+    <line class="arrow-line rfid" x1="730" y1="480" x2="430" y2="480"/>
+    <line class="arrow-line rfid" x1="730" y1="480" x2="700" y2="480"/>
+    <line class="arrow-line rfid" x1="730" y1="480" x2="970" y2="480"/>
+    <line class="arrow-line rfid" x1="730" y1="480" x2="1240" y2="480"/>
+    <!-- Down arrows -->
+    <line class="arrow-line rfid" x1="160" y1="480" x2="160" y2="500"/><polygon class="arrow-head rfid" points="155,498 160,508 165,498"/>
+    <line class="arrow-line rfid" x1="430" y1="480" x2="430" y2="500"/><polygon class="arrow-head rfid" points="425,498 430,508 435,498"/>
+    <line class="arrow-line rfid" x1="700" y1="480" x2="700" y2="500"/><polygon class="arrow-head rfid" points="695,498 700,508 705,498"/>
+    <line class="arrow-line rfid" x1="970" y1="480" x2="970" y2="500"/><polygon class="arrow-head rfid" points="965,498 970,508 975,498"/>
+    <line class="arrow-line rfid" x1="1240" y1="480" x2="1240" y2="500"/><polygon class="arrow-head rfid" points="1235,498 1240,508 1245,498"/>
+  </svg>
+
+  <div class="box rfid" style="top: 510px; left: 60px; width: 200px; height: 75px;">
+    <div class="box-title" style="color: #4ea8de;">Tagging</div>
+    <ul class="sub"><li>Warehouse tagging</li><li>On-site tagging</li></ul>
+  </div>
+  <div class="box rfid" style="top: 510px; left: 320px; width: 210px; height: 75px;">
+    <div class="box-title" style="color: #4ea8de;">Shipping</div>
+    <div class="sub">Logistics for tagged inventory</div>
+  </div>
+  <div class="box rfid" style="top: 510px; left: 590px; width: 220px; height: 75px;">
+    <div class="box-title" style="color: #4ea8de;">Bring Up</div>
+    <div class="sub">Esp. networked lane — new assoc</div>
+  </div>
+  <div class="box rfid" style="top: 510px; left: 860px; width: 220px; height: 75px;">
+    <div class="box-title" style="color: #4ea8de;">BOH Ops</div>
+    <div class="sub">JWO vs. non-JWO</div>
+  </div>
+  <div class="box rfid" style="top: 510px; left: 1130px; width: 220px; height: 90px;">
+    <div class="box-title" style="color: #4ea8de;">FOH Ops</div>
+    <ul class="sub"><li>Replenishment</li><li>Returns</li><li>Assoc tasks / training</li></ul>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- PHASE 3: GENERAL TOUR PLANNING              -->
+  <!-- ============================================ -->
+  <div class="section-title" style="top: 640px;">Phase 3 — General Tour Planning</div>
+  <div class="section-divider" style="top: 660px;"></div>
+
+  <svg class="arrows">
+    <line class="arrow-line" x1="730" y1="600" x2="730" y2="700"/>
+    <polygon class="arrow-head" points="725,698 730,708 735,698"/>
+  </svg>
+
+  <div class="box phase" style="top: 710px; left: 580px; width: 300px; height: 45px;">
+    General Tour Planning &amp; Logistics
+  </div>
+
+  <!-- Arrow down to training -->
+  <svg class="arrows">
+    <line class="arrow-line" x1="730" y1="755" x2="730" y2="790"/>
+    <polygon class="arrow-head" points="725,788 730,798 735,788"/>
+  </svg>
+
+  <!-- ============================================ -->
+  <!-- PHASE 4: TRAINING PLAN                      -->
+  <!-- ============================================ -->
+  <div class="section-title" style="top: 790px;">Phase 4 — Training Plan (Need SOPs)</div>
+  <div class="section-divider" style="top: 810px;"></div>
+
+  <div class="box training" style="top: 830px; left: 580px; width: 300px; height: 45px;">
+    <div class="box-title" style="color: #6bcf7f;">Training Plan</div>
+  </div>
+
+  <!-- Fan out to training items -->
+  <svg class="arrows">
+    <line class="arrow-line training" x1="730" y1="875" x2="730" y2="900"/>
+    <line class="arrow-line training" x1="730" y1="900" x2="110" y2="900"/>
+    <line class="arrow-line training" x1="730" y1="900" x2="330" y2="900"/>
+    <line class="arrow-line training" x1="730" y1="900" x2="550" y2="900"/>
+    <line class="arrow-line training" x1="730" y1="900" x2="770" y2="900"/>
+    <line class="arrow-line training" x1="730" y1="900" x2="990" y2="900"/>
+    <line class="arrow-line training" x1="730" y1="900" x2="1210" y2="900"/>
+    <line class="arrow-line training" x1="730" y1="900" x2="1390" y2="900"/>
+    <!-- Down arrows -->
+    <line class="arrow-line training" x1="110" y1="900" x2="110" y2="920"/><polygon class="arrow-head training" points="105,918 110,928 115,918"/>
+    <line class="arrow-line training" x1="330" y1="900" x2="330" y2="920"/><polygon class="arrow-head training" points="325,918 330,928 335,918"/>
+    <line class="arrow-line training" x1="550" y1="900" x2="550" y2="920"/><polygon class="arrow-head training" points="545,918 550,928 555,918"/>
+    <line class="arrow-line training" x1="770" y1="900" x2="770" y2="920"/><polygon class="arrow-head training" points="765,918 770,928 775,918"/>
+    <line class="arrow-line training" x1="990" y1="900" x2="990" y2="920"/><polygon class="arrow-head training" points="985,918 990,928 995,918"/>
+    <line class="arrow-line training" x1="1210" y1="900" x2="1210" y2="920"/><polygon class="arrow-head training" points="1205,918 1210,928 1215,918"/>
+    <line class="arrow-line training" x1="1390" y1="900" x2="1390" y2="920"/><polygon class="arrow-head training" points="1385,918 1390,928 1395,918"/>
+  </svg>
+
+  <div class="box training" style="top: 930px; left: 30px; width: 160px; height: 55px;">
+    <div class="box-title" style="color: #6bcf7f;">Uncrating</div>
+    <div class="sub">Crate load / unload</div>
+  </div>
+  <div class="box training" style="top: 930px; left: 240px; width: 180px; height: 55px;">
+    <div class="box-title" style="color: #6bcf7f;">Physical Deployment</div>
+  </div>
+  <div class="box training" style="top: 930px; left: 470px; width: 160px; height: 55px;">
+    <div class="box-title" style="color: #6bcf7f;">Daily Bring Up</div>
+  </div>
+  <div class="box training" style="top: 930px; left: 680px; width: 180px; height: 55px;">
+    <div class="box-title" style="color: #6bcf7f;">Store Ops</div>
+    <div class="sub">BOH / FOH</div>
+  </div>
+  <div class="box training" style="top: 930px; left: 910px; width: 160px; height: 55px;">
+    <div class="box-title" style="color: #6bcf7f;">Assoc Tasks</div>
+    <div class="sub">BOH / FOH</div>
+  </div>
+  <div class="box training" style="top: 930px; left: 1120px; width: 180px; height: 55px;">
+    <div class="box-title" style="color: #6bcf7f;">RFID Tagging</div>
+    <div class="sub">+ Cycle counting</div>
+  </div>
+  <div class="box training" style="top: 930px; left: 1310px; width: 160px; height: 55px;">
+    <div class="box-title" style="color: #6bcf7f;">Sales Reporting</div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- PHASE 5: RACI & RESOURCE PLANNING            -->
+  <!-- ============================================ -->
+  <div class="section-title" style="top: 1030px;">Phase 5 — RACI &amp; Resource Planning</div>
+  <div class="section-divider" style="top: 1050px;"></div>
+
+  <svg class="arrows">
+    <line class="arrow-line" x1="730" y1="985" x2="730" y2="1080"/>
+    <polygon class="arrow-head" points="725,1078 730,1088 735,1078"/>
+  </svg>
+
+  <!-- Goals boxes -->
+  <div class="box goal" style="top: 1090px; left: 80px; width: 260px; height: 90px;">
+    <div class="box-title" style="color: #b07aed;">Goal: Sync'd on Plans</div>
+    <ul class="sub"><li>Regular comms going forward</li><li>HB knows what to do</li><li>Tagging, cycle count, lane move/BU</li><li>Escalation paths defined</li></ul>
+  </div>
+
+  <div class="box goal" style="top: 1090px; left: 400px; width: 260px; height: 90px;">
+    <div class="box-title" style="color: #b07aed;">Goal: Resources Identified</div>
+    <ul class="sub"><li>Tagging resources</li><li>Store ops (replenishment)</li><li>6 Tech Net × 2 Days (3w VSL)</li></ul>
+  </div>
+
+  <div class="box goal" style="top: 1090px; left: 720px; width: 260px; height: 90px;">
+    <div class="box-title" style="color: #b07aed;">RACI Defined</div>
+    <ul class="sub"><li>Inventory tracking reqs</li><li>Sales reporting reqs</li><li>Store design constraints</li><li>FOH/BOH ops constraints</li></ul>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- RISKS SECTION                                -->
+  <!-- ============================================ -->
+  <div class="section-title" style="top: 1220px; color: #e05555;">Risks &amp; Mitigations</div>
+  <div class="section-divider" style="top: 1240px; border-color: #e05555;"></div>
+
+  <!-- Risk dashed lines from goals -->
+  <svg class="arrows">
+    <line class="arrow-line risk" x1="730" y1="1180" x2="730" y2="1270"/>
+    <polygon class="arrow-head" style="fill:#e05555;" points="725,1268 730,1278 735,1268"/>
+  </svg>
+
+  <div class="box risk" style="top: 1280px; left: 80px; width: 300px; height: 65px;">
+    <div class="box-title" style="color: #e05555;">Risk 1: Tips?</div>
+    <div class="sub">Tipping policy / process undefined</div>
+  </div>
+  <div class="box risk" style="top: 1280px; left: 440px; width: 300px; height: 65px;">
+    <div class="box-title" style="color: #e05555;">Risk 2: Tags in Wrong Location</div>
+    <div class="sub">(ex LA vs Tampa) — EPC inducted to wrong site</div>
+  </div>
+  <div class="box risk" style="top: 1280px; left: 800px; width: 340px; height: 65px;">
+    <div class="box-title" style="color: #e05555;">Risk 3: Escalation / Resolution</div>
+    <div class="sub">Tech / ops issue escalation path unclear</div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- CONVERGE TO LAUNCH                           -->
+  <!-- ============================================ -->
+  <svg class="arrows">
+    <line class="arrow-line" x1="230" y1="1345" x2="230" y2="1400"/>
+    <line class="arrow-line" x1="590" y1="1345" x2="590" y2="1400"/>
+    <line class="arrow-line" x1="970" y1="1345" x2="970" y2="1400"/>
+    <line class="arrow-line" x1="230" y1="1400" x2="970" y2="1400"/>
+    <line class="arrow-line" x1="600" y1="1400" x2="600" y2="1430"/>
+    <polygon class="arrow-head" points="595,1428 600,1438 605,1428"/>
+  </svg>
+
+  <div class="box phase" style="top: 1440px; left: 500px; width: 200px; height: 45px;">
+    Opens / Open Items
+  </div>
+
+  <svg class="arrows">
+    <line class="arrow-line" x1="600" y1="1485" x2="600" y2="1520"/>
+    <polygon class="arrow-head" points="595,1518 600,1528 605,1518"/>
+  </svg>
+
+  <div class="box launch" style="top: 1530px; left: 535px; width: 130px; height: 45px;">
+    Launch Ready
+  </div>
+
+  <!-- Legend -->
+  <div style="position: absolute; top: 1610px; left: 500px; font-size: 11px; color: #999;">
+    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+      <div style="width: 20px; height: 16px; background: #2e2518; border: 1px solid #f0a030; border-radius: 3px;"></div>
+      <span>Phase milestones</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+      <div style="width: 20px; height: 16px; background: #1a2a38; border: 1px solid #4ea8de; border-radius: 3px;"></div>
+      <span>RFID gap analysis items</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+      <div style="width: 20px; height: 16px; background: #1a2e1f; border: 1px solid #6bcf7f; border-radius: 3px;"></div>
+      <span>Training plan items (need SOPs)</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+      <div style="width: 20px; height: 16px; background: #231a2e; border: 1px solid #b07aed; border-radius: 3px;"></div>
+      <span>Goals &amp; RACI</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+      <div style="width: 20px; height: 16px; background: #2e1a1a; border: 1px solid #e05555; border-radius: 3px;"></div>
+      <span>Risks</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <div style="width: 30px; height: 3px; background: #888;"></div>
+      <span>Workflow flow</span>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
