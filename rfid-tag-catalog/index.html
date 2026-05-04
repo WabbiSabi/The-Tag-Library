@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RFID Tag Catalog</title>
+  <style>
+    :root {
+      --primary: #0e1117;
+      --accent: #d4a84b;
+      --accent-light: #e8c36a;
+      --surface: #161b26;
+      --surface-light: #1c2333;
+      --text: #d4d8e0;
+      --text-muted: #7a8599;
+      --border: #2a3345;
+      --success: #6fc4a0;
+      --blue: #5ba4c9;
+      --card-radius: 16px;
+      --void: #0a0d12;
+      --soul: #e8e8f0;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--primary); color: var(--text); line-height: 1.6;
+    }
+
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, var(--surface) 0%, var(--primary) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 2.5rem 2rem 2rem; text-align: center;
+    }
+    .header h1 { font-size: 2.2rem; font-weight: 300; letter-spacing: 2px; margin-bottom: 0.3rem; text-transform: uppercase; }
+    .header h1 span { color: var(--accent); font-weight: 600; }
+    .header p { color: var(--text-muted); font-size: 1.05rem; max-width: 640px; margin: 0 auto; }
+
+    /* Filter */
+    .filter-bar { display: flex; justify-content: center; gap: 0.6rem; padding: 1.5rem 2rem; flex-wrap: wrap; }
+    .filter-btn {
+      background: var(--surface); color: var(--text-muted); border: 1px solid var(--border);
+      padding: 0.45rem 1.15rem; border-radius: 999px; cursor: pointer; font-size: 0.88rem;
+      transition: all 0.2s ease;
+    }
+    .filter-btn:hover { border-color: var(--accent); color: var(--text); }
+    .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    /* Cards */
+    .catalog {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(370px, 1fr));
+      gap: 2rem; padding: 1rem 2rem 3rem; max-width: 1320px; margin: 0 auto;
+    }
+    .card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--card-radius);
+      overflow: hidden; transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: flex; flex-direction: column;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.4); }
+
+    .card-visual {
+      height: 200px; display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden; background: #1a2744;
+    }
+    .card-visual img {
+      max-height: 170px; max-width: 90%; object-fit: contain;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
+    }
+    .card-visual .fallback-icon { font-size: 4.2rem; opacity: 0.85; }
+
+    .badge {
+      position: absolute; top: 1rem; right: 1rem;
+      color: #fff; font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.5px; padding: 0.3rem 0.7rem; border-radius: 999px;
+    }
+    .badge.brand { background: linear-gradient(135deg, var(--accent), #b8923e); }
+    .badge.fabric { background: var(--success); color: var(--void); }
+    .badge.metal { background: var(--blue); }
+
+    .card-body { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
+    .card-body h2 { font-size: 1.3rem; margin-bottom: 0.15rem; }
+    .card-mfr { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.15rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+    .card-body .subtitle { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.2rem; line-height: 1.5; }
+
+    .specs { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-bottom: 1.2rem; }
+    .spec-item label {
+      display: block; font-size: 0.68rem; text-transform: uppercase;
+      letter-spacing: 0.8px; color: var(--text-muted); margin-bottom: 0.1rem;
+    }
+    .spec-item span { font-size: 0.92rem; font-weight: 600; }
+
+    .form-factors { margin-bottom: 1rem; }
+    .form-factors > label { display: block; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); margin-bottom: 0.4rem; }
+    .ff-pills { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .ff-pill {
+      background: rgba(52,152,219,0.12); color: var(--blue); font-size: 0.78rem;
+      padding: 0.25rem 0.7rem; border-radius: 999px; border: 1px solid rgba(52,152,219,0.25);
+    }
+
+    .use-cases { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.2rem; }
+    .use-case-tag {
+      background: rgba(212,168,75,0.08); color: var(--accent-light); font-size: 0.73rem;
+      padding: 0.22rem 0.6rem; border-radius: 999px; border: 1px solid rgba(212,168,75,0.2);
+    }
+
+    /* Pricing */
+    .pricing { margin-top: auto; }
+    .pricing h3 {
+      font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.8px;
+      color: var(--text-muted); margin-bottom: 0.7rem; border-top: 1px solid var(--border); padding-top: 1rem;
+    }
+    .price-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.45rem 0.7rem; border-radius: 8px; margin-bottom: 0.3rem;
+      background: rgba(255,255,255,0.025);
+    }
+    .price-row:hover { background: rgba(255,255,255,0.05); }
+    .price-label { font-size: 0.88rem; }
+    .price-value { font-weight: 700; font-size: 0.95rem; color: var(--success); }
+    .price-note { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem; font-style: italic; }
+
+    /* Branding pricing table */
+    .brand-table-wrap { margin-top: 0.5rem; border: 1px solid var(--border); border-radius: 12px; overflow-x: auto; }
+    .brand-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    .brand-table th, .brand-table td { padding: 0.55rem 0.7rem; text-align: right; border-bottom: 1px solid var(--border); }
+    .brand-table th { background: var(--surface-light); color: var(--text-muted); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.6px; font-weight: 600; }
+    .brand-table td:first-child, .brand-table th:first-child { text-align: left; }
+    .brand-table tr:last-child td { border-bottom: none; }
+    .brand-table td { background: rgba(255,255,255,0.015); }
+    .brand-table .col-highlight { color: var(--accent-light); font-weight: 700; }
+
+    /* Comparison */
+    .compare-section { max-width: 1320px; margin: 0 auto 3rem; padding: 0 2rem; }
+    .compare-section h2 { text-align: center; font-size: 1.5rem; margin-bottom: 1.5rem; }
+    .compare-table-wrap { overflow-x: auto; border-radius: var(--card-radius); border: 1px solid var(--border); }
+    table.compare { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    table.compare th, table.compare td { padding: 0.8rem 1.2rem; text-align: left; border-bottom: 1px solid var(--border); }
+    table.compare th {
+      background: var(--surface); color: var(--text-muted); font-size: 0.72rem;
+      text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; position: sticky; top: 0;
+    }
+    table.compare td { background: var(--surface-light); }
+    table.compare tr:last-child td { border-bottom: none; }
+    table.compare td:first-child { font-weight: 600; }
+    .check { color: var(--success); font-weight: 700; }
+    .no-check { color: var(--text-muted); }
+
+    .footer { text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.78rem; border-top: 1px solid var(--border); }
+
+    @media print {
+      body { background: #fff; color: #222; }
+      .card { break-inside: avoid; border: 1px solid #ddd; box-shadow: none; }
+      .card:hover { transform: none; }
+      .filter-bar { display: none; }
+      .header { background: none; border-bottom: 2px solid #222; }
+      .header h1 { color: #222; } .header h1 span { color: #b8923e; }
+      table.compare th { background: #f5f5f5; } table.compare td { background: #fff; }
+    }
+    @media (max-width: 480px) {
+      .catalog { grid-template-columns: 1fr; padding: 1rem; }
+      .header h1 { font-size: 1.6rem; }
+      .specs { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1>RFID <span>Tag Catalog</span></h1>
+  <p>Approved tag portfolio for solution design and client consultation</p>
+</div>
+
+<div class="filter-bar">
+  <button class="filter-btn active" onclick="filterCards('all')">All Tags</button>
+  <button class="filter-btn" onclick="filterCards('apparel')">Apparel &amp; Soft Goods</button>
+  <button class="filter-btn" onclick="filterCards('fnb')">Food &amp; Beverage</button>
+  <button class="filter-btn" onclick="filterCards('merch')">General Merchandise</button>
+  <button class="filter-btn" onclick="filterCards('on-metal')">On-Metal</button>
+</div>
+
+<div class="catalog" id="catalog">
+
+  <!-- ═══ TAG 1: AD Elevate M830 ═══ -->
+  <div class="card" data-categories="apparel,merch">
+    <div class="card-visual" style="background: linear-gradient(135deg,#111827,#0e1117);">
+      <img src="images/M8 as a sticker.jpg"
+           alt="AD Elevate M830 applied to merchandise"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <div class="fallback-icon" style="display:none;">🏷️</div>
+    </div>
+    <div class="card-body">
+      <div class="card-mfr">Avery Dennison / Smartrac</div>
+      <h2>AD Elevate M830</h2>
+      <p class="subtitle">
+        Primary soft-goods tag — versatile adhesive label or hang tag format.
+        Optimized for hanging &amp; folded apparel plus general merchandise like glassware, accessories, and hats.
+      </p>
+      <div class="specs">
+        <div class="spec-item"><label>Chip</label><span>Impinj M830</span></div>
+        <div class="spec-item"><label>Frequency</label><span>UHF 860 – 960 MHz</span></div>
+        <div class="spec-item"><label>Antenna Size</label><span>72 × 23 mm</span></div>
+        <div class="spec-item"><label>EPC Memory</label><span>128-bit</span></div>
+        <div class="spec-item"><label>TID Memory</label><span>96-bit (48-bit S/N)</span></div>
+        <div class="spec-item"><label>Substrate</label><span>40# Paper</span></div>
+        <div class="spec-item"><label>Face Stock</label><span>TT Printable (TT2C)</span></div>
+        <div class="spec-item"><label>Standard</label><span>ISO 18000-63 Type C</span></div>
+      </div>
+      <div class="form-factors">
+        <label>Available Formats</label>
+        <div class="ff-pills">
+          <span class="ff-pill">Adhesive Label</span>
+          <span class="ff-pill">Hang Tag</span>
+          <span class="ff-pill">Dry Inlay</span>
+          <span class="ff-pill">Wet Inlay</span>
+        </div>
+      </div>
+      <div class="use-cases">
+        <span class="use-case-tag">Hanging Apparel</span>
+        <span class="use-case-tag">Folded Apparel</span>
+        <span class="use-case-tag">Glassware</span>
+        <span class="use-case-tag">Accessories</span>
+        <span class="use-case-tag">Hats</span>
+        <span class="use-case-tag">General Merchandise</span>
+      </div>
+      <div style="margin-bottom:1.2rem;">
+        <label style="display:block; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.8px; color:var(--text-muted); margin-bottom:0.4rem;">Applied Examples</label>
+        <div style="display:flex; gap:0.6rem; flex-wrap:wrap;">
+          <div style="flex:1; min-width:120px; text-align:center;">
+            <img src="images/M8 as a sticker.jpg" alt="AD Elevate M830 as adhesive sticker"
+                 style="max-width:100%; max-height:140px; border-radius:8px; object-fit:cover; border:1px solid var(--border);"
+                 onerror="this.parentElement.style.display='none';">
+            <div style="font-size:0.7rem; color:var(--text-muted); margin-top:0.3rem;">Adhesive Label</div>
+          </div>
+          <div style="flex:1; min-width:120px; text-align:center;">
+            <img src="images/M8 as a Hang-tag.jpg" alt="AD Elevate M830 as hang tag"
+                 style="max-width:100%; max-height:140px; border-radius:8px; object-fit:cover; border:1px solid var(--border);"
+                 onerror="this.parentElement.style.display='none';">
+            <div style="font-size:0.7rem; color:var(--text-muted); margin-top:0.3rem;">Hang Tag</div>
+          </div>
+        </div>
+      </div>
+      <div class="pricing">
+        <h3>Pricing</h3>
+        <div class="price-row">
+          <span class="price-label">Standard Volume</span>
+          <span class="price-value">Contact for Quote</span>
+        </div>
+        <p class="price-note">Available in multiple delivery formats. Qty per reel varies by SKU (800 – 10,747 pcs/reel).</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TAG 2: AD Midas Flagtag M750 (customizable) ═══ -->
+  <div class="card" data-categories="fnb,on-metal,merch">
+    <div class="card-visual" style="background: linear-gradient(135deg,#0f1a2a,#0e1117);">
+      <img src="images/JWO_RFIDTag_REG.jpg"
+           alt="AD Midas Flagtag M750"
+           onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=fallback-icon>🔖</div><span class=badge\ brand>✦ Custom Branding</span>';">
+      <span class="badge brand">✦ Custom Branding</span>
+    </div>
+    <div class="card-body">
+      <div class="card-mfr">Avery Dennison / Smartrac &nbsp;·&nbsp; Converted by MPI Label Systems</div>
+      <h2>AD Midas Flagtag® M750</h2>
+      <p class="subtitle">
+        On-metal specialist — flag antenna folds over and uses the metal surface to boost performance.
+        Approved for the Food &amp; Beverage program. Customizable face available for client branding at additional cost.
+      </p>
+      <div class="specs">
+        <div class="spec-item"><label>Chip</label><span>Impinj M750</span></div>
+        <div class="spec-item"><label>Frequency</label><span>UHF 860 – 960 MHz</span></div>
+        <div class="spec-item"><label>Antenna Size</label><span>34.4 × 18 mm</span></div>
+        <div class="spec-item"><label>EPC / User Memory</label><span>96-bit / 32-bit</span></div>
+        <div class="spec-item"><label>TID Memory</label><span>96-bit (48-bit S/N)</span></div>
+        <div class="spec-item"><label>Substrate</label><span>PET</span></div>
+        <div class="spec-item"><label>Face Material</label><span>2 mil White Polyprop</span></div>
+        <div class="spec-item"><label>On-Metal</label><span class="check">✓ Designed for Metal</span></div>
+      </div>
+      <div class="form-factors">
+        <label>Available Formats</label>
+        <div class="ff-pills">
+          <span class="ff-pill">Adhesive Flag Label</span>
+        </div>
+      </div>
+      <div class="use-cases">
+        <span class="use-case-tag">Food &amp; Beverage</span>
+        <span class="use-case-tag">Cans &amp; Bottles</span>
+        <span class="use-case-tag">Metal Assets</span>
+        <span class="use-case-tag">Automotive</span>
+        <span class="use-case-tag">Industrial</span>
+        <span class="use-case-tag">Logistics</span>
+      </div>
+      <div style="margin-bottom:1.2rem;">
+        <label style="display:block; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.8px; color:var(--text-muted); margin-bottom:0.4rem;">Applied Example</label>
+        <img src="images/example midas.jpg" alt="Midas Flagtag applied to merchandise"
+             style="max-width:100%; max-height:160px; border-radius:8px; object-fit:cover; border:1px solid var(--border);"
+             onerror="this.parentElement.style.display='none';">
+      </div>
+      <div class="pricing">
+        <h3>Branding Options</h3>
+        <div class="brand-tiers-desc">
+          <div style="display:flex; gap:0.8rem; margin-bottom:0.8rem; flex-wrap:wrap;">
+            <div style="flex:1; min-width:140px; background:rgba(255,255,255,0.025); border-radius:10px; padding:0.7rem 0.85rem; border:1px solid var(--border);">
+              <div style="font-weight:700; font-size:0.88rem; margin-bottom:0.2rem;">Blank White</div>
+              <div style="font-size:0.75rem; color:var(--text-muted); line-height:1.4;">Plain white polypropylene flag face. No printing. Ready to deploy as-is.</div>
+            </div>
+            <div style="flex:1; min-width:140px; background:rgba(212,168,75,0.06); border-radius:10px; padding:0.7rem 0.85rem; border:1px solid rgba(212,168,75,0.2);">
+              <div style="font-weight:700; font-size:0.88rem; color:var(--accent-light); margin-bottom:0.2rem;">Flood 1 Color</div>
+              <div style="font-size:0.75rem; color:var(--text-muted); line-height:1.4;">Solid single-color flood on the flag face with client logo/text knocked out or overprinted. Great for brand visibility at moderate cost.</div>
+              <img src="images/example midas.jpg" alt="1-Color Flood Example"
+                   style="margin-top:0.5rem; max-width:100%; max-height:80px; border-radius:6px; object-fit:contain; display:block;"
+                   onerror="this.style.display='none';">
+            </div>
+            <div style="flex:1; min-width:140px; background:rgba(255,255,255,0.025); border-radius:10px; padding:0.7rem 0.85rem; border:1px solid var(--border);">
+              <div style="font-weight:700; font-size:0.88rem; margin-bottom:0.2rem;">4-Color Process (4CP)</div>
+              <div style="font-size:0.75rem; color:var(--text-muted); line-height:1.4;">Full CMYK printing on the flag face. Supports full-color logos, gradients, and photography. Premium brand experience.</div>
+            </div>
+          </div>
+        </div>
+
+        <h3 style="border-top:none; padding-top:0;">Pricing per Label</h3>
+        <div class="brand-table-wrap">
+          <table class="brand-table">
+            <thead>
+              <tr>
+                <th>Quantity</th>
+                <th>Blank White</th>
+                <th>Flood 1 Color</th>
+                <th class="col-highlight">4-Color Process</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>1,000</td><td>$0.5260</td><td>$0.7307</td><td class="col-highlight">$1.5053</td></tr>
+              <tr><td>5,000</td><td>$0.3337</td><td>$0.4283</td><td class="col-highlight">$0.7835</td></tr>
+              <tr><td>10,000</td><td>$0.2294</td><td>$0.2667</td><td class="col-highlight">$0.4182</td></tr>
+              <tr><td>25,000</td><td>$0.1612</td><td>$0.1804</td><td class="col-highlight">$0.2660</td></tr>
+              <tr><td>50,000</td><td>$0.1192</td><td>$0.1279</td><td class="col-highlight">$0.1718</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="price-note">
+          100k inlay commitment (MOQ) required — can be ordered in various price breaks.
+          Tooling: $950.00. Labels per roll: 1,000. Pricing includes 2.75% cash/ACH discount.
+          Lead time: est. 3–4 months on inlays if not in stock.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TAG 3: Tageos EOS-241 M730 ═══ -->
+  <div class="card" data-categories="apparel,merch">
+    <div class="card-visual" style="background: linear-gradient(135deg,#121d1a,#0e1117);">
+      <img src="images/EOS-241.jpg"
+           alt="Tageos EOS-241 M730 Inlay"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <div class="fallback-icon" style="display:none;">📋</div>
+      <span class="badge fabric">On-Fabric Approved</span>
+    </div>
+    <div class="card-body">
+      <div class="card-mfr">Tageos</div>
+      <h2>EOS-241 M730</h2>
+      <p class="subtitle">
+        Compact on-fabric sticker tag — smaller footprint alternative to the AD Elevate.
+        Ideal for direct-apply scenarios on garments and textiles.
+      </p>
+      <div class="specs">
+        <div class="spec-item"><label>Chip</label><span>Impinj M730</span></div>
+        <div class="spec-item"><label>Frequency</label><span>UHF 860 – 960 MHz</span></div>
+        <div class="spec-item"><label>Antenna Size</label><span>42 × 16 mm</span></div>
+        <div class="spec-item"><label>EPC Memory</label><span>128-bit</span></div>
+        <div class="spec-item"><label>TID Memory</label><span>96-bit (48-bit S/N)</span></div>
+        <div class="spec-item"><label>Substrate</label><span>Clear PET</span></div>
+        <div class="spec-item"><label>Antenna Material</label><span>Aluminium</span></div>
+        <div class="spec-item"><label>ARC Approval</label><span>F, O, Q, W5, W6</span></div>
+      </div>
+      <div class="form-factors">
+        <label>Available Formats</label>
+        <div class="ff-pills">
+          <span class="ff-pill">Adhesive Sticker Only</span>
+        </div>
+      </div>
+      <div class="use-cases">
+        <span class="use-case-tag">On-Fabric / Garments</span>
+        <span class="use-case-tag">Apparel</span>
+        <span class="use-case-tag">Pharma &amp; Healthcare</span>
+        <span class="use-case-tag">Item-Level Tagging</span>
+        <span class="use-case-tag">Supply Chain</span>
+      </div>
+      <div style="margin-bottom:1.2rem;">
+        <label style="display:block; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.8px; color:var(--text-muted); margin-bottom:0.4rem;">Applied Example</label>
+        <img src="images/example EOS-241.jpg" alt="EOS-241 applied to garment"
+             style="max-width:100%; max-height:160px; border-radius:8px; object-fit:cover; border:1px solid var(--border);"
+             onerror="this.parentElement.style.display='none';">
+      </div>
+      <div class="pricing">
+        <h3>Pricing</h3>
+        <div class="price-row">
+          <span class="price-label">Standard Volume</span>
+          <span class="price-value">Contact for Quote</span>
+        </div>
+        <p class="price-note">Available as dry inlay, wet inlay, or paper-face. Up to 30,000 pcs/roll (dry). 100% tested.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══ Comparison Table ═══ -->
+<div class="compare-section">
+  <h2>Side-by-Side Comparison</h2>
+  <div class="compare-table-wrap">
+    <table class="compare">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>AD Elevate M830</th>
+          <th>AD Midas Flagtag® M750</th>
+          <th>Tageos EOS-241 M730</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Manufacturer</td><td>Avery Dennison</td><td>Avery Dennison / MPI</td><td>Tageos</td></tr>
+        <tr><td>Chip</td><td>Impinj M830</td><td>Impinj M750</td><td>Impinj M730</td></tr>
+        <tr><td>Antenna Size</td><td>72 × 23 mm</td><td>34.4 × 18 mm</td><td>42 × 16 mm</td></tr>
+        <tr><td>EPC Memory</td><td>128-bit</td><td>96-bit</td><td>128-bit</td></tr>
+        <tr><td>User Memory</td><td class="no-check">—</td><td>32-bit</td><td class="no-check">—</td></tr>
+        <tr><td>Form Factors</td><td>Label, Hang Tag, Dry/Wet Inlay</td><td>Adhesive Flag Label</td><td>Sticker Only (Dry/Wet/Paper)</td></tr>
+        <tr><td>On-Metal</td><td class="no-check">—</td><td class="check">✓ Designed for Metal</td><td class="no-check">—</td></tr>
+        <tr><td>On-Fabric</td><td class="check">✓</td><td class="no-check">—</td><td class="check">✓ Approved</td></tr>
+        <tr><td>Custom Branding</td><td class="no-check">—</td><td class="check">✓ Blank / 1-Color / 4CP</td><td class="no-check">—</td></tr>
+        <tr><td>Best For</td><td>Soft goods, apparel, general merch</td><td>F&amp;B program, cans, metal surfaces</td><td>Compact on-fabric, garment tagging</td></tr>
+        <tr><td>Operating Temp</td><td>-40°C to 85°C</td><td>-40°C to 85°C</td><td>-40°C to 85°C</td></tr>
+        <tr><td>ARC Certified</td><td class="check">✓</td><td class="no-check">—</td><td class="check">✓ F, O, Q, W5, W6</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ Quick Selection Guide ═══ -->
+<div class="compare-section">
+  <h2>Quick Selection Guide</h2>
+  <div class="compare-table-wrap">
+    <table class="compare">
+      <thead>
+        <tr><th>Client Need</th><th>Recommended Tag</th><th>Why</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Apparel — hanging &amp; folded</td><td><strong>AD Elevate M830</strong></td><td>Largest antenna, best read range for soft goods. Label or hang tag.</td></tr>
+        <tr><td>Small / on-fabric garment labels</td><td><strong>Tageos EOS-241 M730</strong></td><td>Compact 42×16 mm footprint, on-fabric approved, sticker format.</td></tr>
+        <tr><td>Food &amp; Beverage (cans, bottles)</td><td><strong>AD Midas Flagtag® M750</strong></td><td>On-metal design, flag antenna leverages metal surface for performance.</td></tr>
+        <tr><td>Client wants branded tags</td><td><strong>AD Midas Flagtag® M750</strong></td><td>Only tag with customizable face — Blank, 1-Color Flood, or 4-Color Process.</td></tr>
+        <tr><td>General merchandise (non-metal)</td><td><strong>AD Elevate M830</strong></td><td>Versatile across glassware, accessories, hats. Multiple delivery formats.</td></tr>
+        <tr><td>Automotive / industrial metal assets</td><td><strong>AD Midas Flagtag® M750</strong></td><td>Designed for metallic surfaces, compact form factor.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="footer">
+  <p>RFID Tag Catalog — Internal Use &amp; Client Consultation &nbsp;|&nbsp; Pricing subject to change &nbsp;|&nbsp; Updated 2026</p>
+  <p style="margin-top:0.5rem; font-size:0.7rem;">Midas Flagtag pricing per MPI Quote R051325-25 (May 13, 2025). Includes 2.75% cash/ACH discount. Valid 30 days from issue.</p>
+</div>
+
+<script>
+  function filterCards(category) {
+    const cards = document.querySelectorAll('.card');
+    const buttons = document.querySelectorAll('.filter-btn');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    cards.forEach(card => {
+      if (category === 'all') { card.style.display = ''; return; }
+      card.style.display = card.dataset.categories.split(',').includes(category) ? '' : 'none';
+    });
+  }
+</script>
+
+</body>
+</html>
