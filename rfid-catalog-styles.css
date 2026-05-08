@@ -1,0 +1,46 @@
+.rfid-root{font-family:'Segoe UI',system-ui,sans-serif;background:#0e1117;color:#d4d8e0;line-height:1.6;padding:2rem;border-radius:12px;margin:1rem 0}
+.rfid-root h1{font-size:2rem;font-weight:300;letter-spacing:2px;text-transform:uppercase;text-align:center;margin-bottom:0.3rem}
+.rfid-root h1 b{color:#d4a84b;font-weight:600}
+.rfid-root .rfid-sub{color:#7a8599;text-align:center;margin-bottom:2rem}
+.rfid-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:1.5rem;margin-bottom:2rem}
+.rfid-card{background:#161b26;border:1px solid #2a3345;border-radius:14px;overflow:hidden;transition:transform 0.2s,box-shadow 0.2s}
+.rfid-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,0.4)}
+.rfid-card-img{height:180px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.rfid-card-img img{max-height:160px;max-width:85%;object-fit:contain}
+.rfid-badge{position:absolute;top:0.8rem;right:0.8rem;color:#fff;font-size:0.65rem;font-weight:700;text-transform:uppercase;padding:0.25rem 0.6rem;border-radius:999px}
+.rfid-badge-gold{background:linear-gradient(135deg,#d4a84b,#b8923e)}
+.rfid-badge-green{background:#6fc4a0;color:#0e1117}
+.rfid-card-body{padding:1.2rem}
+.rfid-card-body h2{font-size:1.2rem;margin:0 0 0.1rem;color:#d4d8e0}
+.rfid-mfr{font-size:0.72rem;color:#7a8599;font-weight:600;text-transform:uppercase;margin-bottom:0.4rem}
+.rfid-desc{color:#7a8599;font-size:0.82rem;margin-bottom:1rem;line-height:1.5}
+.rfid-specs{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;margin-bottom:1rem}
+.rfid-specs dt{font-size:0.62rem;text-transform:uppercase;letter-spacing:0.7px;color:#7a8599}
+.rfid-specs dd{font-size:0.88rem;font-weight:600;color:#d4d8e0;margin:0 0 0.4rem}
+.rfid-pills{display:flex;gap:0.35rem;flex-wrap:wrap;margin-bottom:0.8rem}
+.rfid-pill{background:rgba(52,152,219,0.12);color:#5ba4c9;font-size:0.72rem;padding:0.2rem 0.6rem;border-radius:999px;border:1px solid rgba(52,152,219,0.25)}
+.rfid-tags{display:flex;flex-wrap:wrap;gap:0.35rem;margin-bottom:1rem}
+.rfid-tag{background:rgba(212,168,75,0.08);color:#e8c36a;font-size:0.68rem;padding:0.2rem 0.5rem;border-radius:999px;border:1px solid rgba(212,168,75,0.2)}
+.rfid-pricing{border-top:1px solid #2a3345;padding-top:0.8rem;margin-top:auto}
+.rfid-pricing h3{font-size:0.72rem;text-transform:uppercase;color:#7a8599;margin:0 0 0.5rem}
+.rfid-price-row{display:flex;justify-content:space-between;padding:0.35rem 0.5rem;border-radius:6px;background:rgba(255,255,255,0.02);margin-bottom:0.2rem}
+.rfid-price-val{font-weight:700;color:#6fc4a0}
+.rfid-note{font-size:0.7rem;color:#7a8599;font-style:italic;margin-top:0.4rem}
+.rfid-table-wrap{border:1px solid #2a3345;border-radius:10px;overflow-x:auto;margin-bottom:0.5rem}
+.rfid-table{width:100%;border-collapse:collapse;font-size:0.78rem}
+.rfid-table th,.rfid-table td{padding:0.45rem 0.6rem;border-bottom:1px solid #2a3345}
+.rfid-table th{background:#1c2333;color:#7a8599;font-size:0.62rem;text-transform:uppercase;font-weight:600;text-align:right}
+.rfid-table td{color:#d4d8e0;text-align:right;background:rgba(255,255,255,0.01)}
+.rfid-table th:first-child,.rfid-table td:first-child{text-align:left}
+.rfid-table tr:last-child td{border-bottom:none}
+.rfid-hl{color:#e8c36a;font-weight:700}
+.rfid-compare{max-width:1200px;margin:0 auto 2rem}
+.rfid-compare h2{text-align:center;font-size:1.3rem;margin-bottom:1rem;color:#d4d8e0}
+.rfid-ct{width:100%;border-collapse:collapse;font-size:0.82rem}
+.rfid-ct th,.rfid-ct td{padding:0.7rem 1rem;text-align:left;border-bottom:1px solid #2a3345}
+.rfid-ct th{background:#161b26;color:#7a8599;font-size:0.68rem;text-transform:uppercase;font-weight:600}
+.rfid-ct td{background:#1c2333;color:#d4d8e0}
+.rfid-ct tr:last-child td{border-bottom:none}
+.rfid-ct td:first-child{font-weight:600}
+.rfid-ck{color:#6fc4a0;font-weight:700}
+.rfid-nc{color:#7a8599}
