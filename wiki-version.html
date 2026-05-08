@@ -1,0 +1,332 @@
+{{html clean="false" wiki="false"}}
+<div id="rfid-catalog-root">
+<style>
+#rfid-catalog-root {
+  --primary: #0e1117;
+  --accent: #d4a84b;
+  --accent-light: #e8c36a;
+  --surface: #161b26;
+  --surface-light: #1c2333;
+  --text: #d4d8e0;
+  --text-muted: #7a8599;
+  --border: #2a3345;
+  --success: #6fc4a0;
+  --blue: #5ba4c9;
+  --card-radius: 16px;
+  --void: #0a0d12;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--primary);
+  color: var(--text);
+  line-height: 1.6;
+  padding: 0;
+  margin: -15px;
+}
+#rfid-catalog-root * { box-sizing: border-box; }
+#rfid-catalog-root .header {
+  background: linear-gradient(135deg, var(--surface) 0%, var(--primary) 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 2.5rem 2rem 2rem; text-align: center;
+}
+#rfid-catalog-root .header h1 { font-size: 2.2rem; font-weight: 300; letter-spacing: 2px; margin-bottom: 0.3rem; text-transform: uppercase; color: var(--text); }
+#rfid-catalog-root .header h1 span { color: var(--accent); font-weight: 600; }
+#rfid-catalog-root .header p { color: var(--text-muted); font-size: 1.05rem; max-width: 640px; margin: 0 auto; }
+#rfid-catalog-root .filter-bar { display: flex; justify-content: center; gap: 0.6rem; padding: 1.5rem 2rem; flex-wrap: wrap; }
+#rfid-catalog-root .filter-btn {
+  background: var(--surface); color: var(--text-muted); border: 1px solid var(--border);
+  padding: 0.45rem 1.15rem; border-radius: 999px; cursor: pointer; font-size: 0.88rem;
+  transition: all 0.2s ease;
+}
+#rfid-catalog-root .filter-btn:hover { border-color: var(--accent); color: var(--text); }
+#rfid-catalog-root .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+#rfid-catalog-root .catalog {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(370px, 1fr));
+  gap: 2rem; padding: 1rem 2rem 3rem; max-width: 1320px; margin: 0 auto;
+}
+#rfid-catalog-root .card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--card-radius);
+  overflow: hidden; transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex; flex-direction: column;
+}
+#rfid-catalog-root .card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.4); }
+#rfid-catalog-root .card-visual {
+  height: 200px; display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden; background: #1a2744;
+}
+#rfid-catalog-root .card-visual img { max-height: 170px; max-width: 90%; object-fit: contain; }
+#rfid-catalog-root .badge {
+  position: absolute; top: 1rem; right: 1rem;
+  color: #fff; font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.5px; padding: 0.3rem 0.7rem; border-radius: 999px;
+}
+#rfid-catalog-root .badge.brand { background: linear-gradient(135deg, var(--accent), #b8923e); }
+#rfid-catalog-root .badge.fabric { background: var(--success); color: var(--void); }
+#rfid-catalog-root .card-body { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
+#rfid-catalog-root .card-body h2 { font-size: 1.3rem; margin-bottom: 0.15rem; color: var(--text); }
+#rfid-catalog-root .card-mfr { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.15rem; font-weight: 600; text-transform: uppercase; }
+#rfid-catalog-root .subtitle { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.2rem; line-height: 1.5; }
+#rfid-catalog-root .specs { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-bottom: 1.2rem; }
+#rfid-catalog-root .spec-item label { display: block; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); }
+#rfid-catalog-root .spec-item span { font-size: 0.92rem; font-weight: 600; color: var(--text); }
+#rfid-catalog-root .ff-pills { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1rem; }
+#rfid-catalog-root .ff-pill { background: rgba(52,152,219,0.12); color: var(--blue); font-size: 0.78rem; padding: 0.25rem 0.7rem; border-radius: 999px; border: 1px solid rgba(52,152,219,0.25); }
+#rfid-catalog-root .use-cases { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.2rem; }
+#rfid-catalog-root .use-case-tag { background: rgba(212,168,75,0.08); color: var(--accent-light); font-size: 0.73rem; padding: 0.22rem 0.6rem; border-radius: 999px; border: 1px solid rgba(212,168,75,0.2); }
+#rfid-catalog-root .pricing { margin-top: auto; }
+#rfid-catalog-root .pricing h3 { font-size: 0.78rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.7rem; border-top: 1px solid var(--border); padding-top: 1rem; }
+#rfid-catalog-root .price-row { display: flex; justify-content: space-between; padding: 0.45rem 0.7rem; border-radius: 8px; margin-bottom: 0.3rem; background: rgba(255,255,255,0.025); }
+#rfid-catalog-root .price-value { font-weight: 700; color: var(--success); }
+#rfid-catalog-root .price-note { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem; font-style: italic; }
+#rfid-catalog-root .brand-table-wrap { margin-top: 0.5rem; border: 1px solid var(--border); border-radius: 12px; overflow-x: auto; }
+#rfid-catalog-root .brand-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+#rfid-catalog-root .brand-table th, #rfid-catalog-root .brand-table td { padding: 0.55rem 0.7rem; text-align: right; border-bottom: 1px solid var(--border); }
+#rfid-catalog-root .brand-table th { background: var(--surface-light); color: var(--text-muted); font-size: 0.68rem; text-transform: uppercase; font-weight: 600; }
+#rfid-catalog-root .brand-table td:first-child, #rfid-catalog-root .brand-table th:first-child { text-align: left; }
+#rfid-catalog-root .brand-table tr:last-child td { border-bottom: none; }
+#rfid-catalog-root .brand-table td { background: rgba(255,255,255,0.015); color: var(--text); }
+#rfid-catalog-root .col-highlight { color: var(--accent-light); font-weight: 700; }
+#rfid-catalog-root .compare-section { max-width: 1320px; margin: 0 auto 3rem; padding: 0 2rem; }
+#rfid-catalog-root .compare-section h2 { text-align: center; font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--text); }
+#rfid-catalog-root .compare-table-wrap { overflow-x: auto; border-radius: var(--card-radius); border: 1px solid var(--border); }
+#rfid-catalog-root table.compare { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+#rfid-catalog-root table.compare th, #rfid-catalog-root table.compare td { padding: 0.8rem 1.2rem; text-align: left; border-bottom: 1px solid var(--border); }
+#rfid-catalog-root table.compare th { background: var(--surface); color: var(--text-muted); font-size: 0.72rem; text-transform: uppercase; font-weight: 600; }
+#rfid-catalog-root table.compare td { background: var(--surface-light); color: var(--text); }
+#rfid-catalog-root table.compare tr:last-child td { border-bottom: none; }
+#rfid-catalog-root table.compare td:first-child { font-weight: 600; }
+#rfid-catalog-root .check { color: var(--success); font-weight: 700; }
+#rfid-catalog-root .no-check { color: var(--text-muted); }
+#rfid-catalog-root .footer { text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.78rem; border-top: 1px solid var(--border); }
+</style>
+
+<div class="header">
+  <h1>RFID <span>Tag Catalog</span></h1>
+  <p>Approved tag portfolio for solution design and client consultation</p>
+</div>
+
+<div class="filter-bar">
+  <button class="filter-btn active" onclick="rfidFilter('all', this)">All Tags</button>
+  <button class="filter-btn" onclick="rfidFilter('apparel', this)">Apparel &amp; Soft Goods</button>
+  <button class="filter-btn" onclick="rfidFilter('fnb', this)">Food &amp; Beverage</button>
+  <button class="filter-btn" onclick="rfidFilter('merch', this)">General Merchandise</button>
+  <button class="filter-btn" onclick="rfidFilter('on-metal', this)">On-Metal</button>
+</div>
+
+<div class="catalog" id="rfid-catalog">
+
+  <div class="card" data-categories="apparel,merch">
+    <div class="card-visual" style="background:linear-gradient(135deg,#111827,#0e1117);">
+      <img src="https://wabbisabi.github.io/The-Tag-Library/images/M8%20as%20a%20sticker.jpg" alt="AD Elevate M830">
+    </div>
+    <div class="card-body">
+      <div class="card-mfr">Avery Dennison / Smartrac</div>
+      <h2>AD Elevate M830</h2>
+      <p class="subtitle">Primary soft-goods tag. Versatile adhesive label or hang tag format. Optimized for hanging and folded apparel plus general merchandise.</p>
+      <div class="specs">
+        <div class="spec-item"><label>Chip</label><span>Impinj M830</span></div>
+        <div class="spec-item"><label>Frequency</label><span>UHF 860-960 MHz</span></div>
+        <div class="spec-item"><label>Antenna Size</label><span>72 x 23 mm</span></div>
+        <div class="spec-item"><label>EPC Memory</label><span>128-bit</span></div>
+        <div class="spec-item"><label>TID Memory</label><span>96-bit (48-bit S/N)</span></div>
+        <div class="spec-item"><label>Substrate</label><span>40# Paper</span></div>
+        <div class="spec-item"><label>Face Stock</label><span>TT Printable (TT2C)</span></div>
+        <div class="spec-item"><label>Standard</label><span>ISO 18000-63 Type C</span></div>
+      </div>
+      <div class="ff-pills">
+        <span class="ff-pill">Adhesive Label</span>
+        <span class="ff-pill">Hang Tag</span>
+        <span class="ff-pill">Dry Inlay</span>
+        <span class="ff-pill">Wet Inlay</span>
+      </div>
+      <div class="use-cases">
+        <span class="use-case-tag">Hanging Apparel</span>
+        <span class="use-case-tag">Folded Apparel</span>
+        <span class="use-case-tag">Glassware</span>
+        <span class="use-case-tag">Accessories</span>
+        <span class="use-case-tag">Hats</span>
+      </div>
+      <div class="pricing">
+        <h3>Pricing</h3>
+        <div class="price-row"><span>Standard Volume</span><span class="price-value">Contact for Quote</span></div>
+        <p class="price-note">Qty per reel varies by SKU (800 - 10,747 pcs/reel).</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-categories="fnb,on-metal,merch">
+    <div class="card-visual" style="background:linear-gradient(135deg,#0f1a2a,#0e1117);">
+      <img src="https://wabbisabi.github.io/The-Tag-Library/images/JWO_RFIDTag_REG.jpg" alt="AD Midas Flagtag M750">
+      <span class="badge brand">Custom Branding</span>
+    </div>
+    <div class="card-body">
+      <div class="card-mfr">Avery Dennison / Smartrac - MPI Label Systems</div>
+      <h2>AD Midas Flagtag M750</h2>
+      <p class="subtitle">On-metal specialist. Flag antenna uses metal surface to boost performance. Approved for Food and Beverage program. Customizable face for client branding.</p>
+      <div class="specs">
+        <div class="spec-item"><label>Chip</label><span>Impinj M750</span></div>
+        <div class="spec-item"><label>Frequency</label><span>UHF 860-960 MHz</span></div>
+        <div class="spec-item"><label>Antenna Size</label><span>34.4 x 18 mm</span></div>
+        <div class="spec-item"><label>EPC / User</label><span>96-bit / 32-bit</span></div>
+        <div class="spec-item"><label>TID Memory</label><span>96-bit (48-bit S/N)</span></div>
+        <div class="spec-item"><label>Substrate</label><span>PET</span></div>
+        <div class="spec-item"><label>Face Material</label><span>2 mil White Polyprop</span></div>
+        <div class="spec-item"><label>On-Metal</label><span class="check">Yes</span></div>
+      </div>
+      <div class="ff-pills"><span class="ff-pill">Adhesive Flag Label</span></div>
+      <div class="use-cases">
+        <span class="use-case-tag">Food &amp; Beverage</span>
+        <span class="use-case-tag">Cans &amp; Bottles</span>
+        <span class="use-case-tag">Metal Assets</span>
+        <span class="use-case-tag">Automotive</span>
+        <span class="use-case-tag">Industrial</span>
+      </div>
+      <div class="pricing">
+        <h3>Pricing — Blank White (Atlas RFID)</h3>
+        <div class="brand-table-wrap">
+          <table class="brand-table">
+            <thead><tr><th>Qty</th><th>Unit Price</th><th>Re-Roll Fee</th><th class="col-highlight">Total</th></tr></thead>
+            <tbody>
+              <tr><td>25,000</td><td>$0.1290</td><td>$50 setup + $62.50</td><td class="col-highlight">$3,337.50</td></tr>
+              <tr><td>50,000</td><td>$0.1290</td><td>$125.00</td><td class="col-highlight">$6,575.00</td></tr>
+              <tr><td>100,000</td><td>$0.0981</td><td>$250.00</td><td class="col-highlight">$10,060.00</td></tr>
+              <tr><td>500,000</td><td>$0.0875</td><td>$1,250.00</td><td class="col-highlight">$45,000.00</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="price-note">NC/NR — All sales final. AD Smartrac Midas FlagTag White Wet Inlay (43 x 24 mm, M750, RA2). Re-rolling: $50 setup + $5/roll (2,000 pcs/roll). Quote: Atlas RFID, May 6, 2026.</p>
+
+        <h3 style="border-top:none; padding-top:0.8rem;">Pricing — Preprinted Graphic (MPI Label Systems)</h3>
+        <div class="brand-table-wrap">
+          <table class="brand-table">
+            <thead><tr><th>Qty</th><th class="col-highlight">Price per Label</th><th>Lead Time</th></tr></thead>
+            <tbody>
+              <tr><td>50,000</td><td class="col-highlight">$0.1883</td><td>6-8 weeks</td></tr>
+              <tr><td>100,000</td><td class="col-highlight">$0.1592</td><td>14-16 weeks</td></tr>
+              <tr><td>250,000</td><td class="col-highlight">$0.1363</td><td>14-16 weeks</td></tr>
+              <tr><td>500,000</td><td class="col-highlight">$0.1333</td><td>14-17 weeks</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="price-note">Preprinted flag with graphic combo (two graphic items). Converted by MPI Label Systems.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-categories="apparel,merch">
+    <div class="card-visual" style="background:linear-gradient(135deg,#121d1a,#0e1117);">
+      <img src="https://wabbisabi.github.io/The-Tag-Library/images/EOS-241.jpg" alt="Tageos EOS-241 M730">
+      <span class="badge fabric">On-Fabric</span>
+    </div>
+    <div class="card-body">
+      <div class="card-mfr">Tageos</div>
+      <h2>EOS-241 M730</h2>
+      <p class="subtitle">Compact on-fabric sticker tag. Smaller footprint alternative to the AD Elevate. Ideal for direct-apply on garments and textiles.</p>
+      <div class="specs">
+        <div class="spec-item"><label>Chip</label><span>Impinj M730</span></div>
+        <div class="spec-item"><label>Frequency</label><span>UHF 860-960 MHz</span></div>
+        <div class="spec-item"><label>Antenna Size</label><span>42 x 16 mm</span></div>
+        <div class="spec-item"><label>EPC Memory</label><span>128-bit</span></div>
+        <div class="spec-item"><label>TID Memory</label><span>96-bit (48-bit S/N)</span></div>
+        <div class="spec-item"><label>Substrate</label><span>Clear PET</span></div>
+        <div class="spec-item"><label>Antenna</label><span>Aluminium</span></div>
+        <div class="spec-item"><label>ARC</label><span>F, O, Q, W5, W6</span></div>
+      </div>
+      <div class="ff-pills"><span class="ff-pill">Adhesive Sticker Only</span></div>
+      <div class="use-cases">
+        <span class="use-case-tag">On-Fabric</span>
+        <span class="use-case-tag">Apparel</span>
+        <span class="use-case-tag">Pharma</span>
+        <span class="use-case-tag">Item-Level</span>
+        <span class="use-case-tag">Supply Chain</span>
+      </div>
+      <div class="pricing">
+        <h3>Pricing — PET Inlay (Starport)</h3>
+        <div class="brand-table-wrap">
+          <table class="brand-table">
+            <thead><tr><th>Qty</th><th>Unit Price</th><th>Rolls</th><th>Cost/Roll</th><th class="col-highlight">Total</th></tr></thead>
+            <tbody>
+              <tr><td>25,000</td><td>$0.112</td><td>2</td><td>$280.00</td><td class="col-highlight">$560.00</td></tr>
+              <tr><td>20,000</td><td>$0.084</td><td>8</td><td>$210.00</td><td class="col-highlight">$1,680.00</td></tr>
+              <tr><td>50,000</td><td>$0.073</td><td>20</td><td>$182.50</td><td class="col-highlight">$3,650.00</td></tr>
+              <tr><td>100,000</td><td>$0.058</td><td>40</td><td>$145.00</td><td class="col-highlight">$5,800.00</td></tr>
+              <tr><td>250,000</td><td>$0.054</td><td>100</td><td>$135.00</td><td class="col-highlight">$13,500.00</td></tr>
+              <tr><td>500,000</td><td>$0.053</td><td>200</td><td>$132.50</td><td class="col-highlight">$26,500.00</td></tr>
+              <tr><td>1,000,000</td><td>$0.052</td><td>400</td><td>$130.00</td><td class="col-highlight">$52,000.00</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="price-note">Material: PET. F.O.B. KCMO. Terms: Net 30. Encoding: TBD. Supplier: Starport.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="compare-section">
+  <h2>On-Site Tagging Service</h2>
+  <p style="text-align:center; color:var(--text-muted); font-size:0.9rem; margin-bottom:1.5rem;">Third-party on-site tagging labor for customer inventory. Estimates based on tagging speed per item.</p>
+  <div class="compare-table-wrap">
+    <table class="compare">
+      <thead>
+        <tr>
+          <th>Products</th>
+          <th>Hrs @ 3s</th>
+          <th>Hrs @ 4s</th>
+          <th>Hrs @ 5s</th>
+          <th>Rate</th>
+          <th>Est. Labor (4s)</th>
+          <th>Est. Mgmt</th>
+          <th>Est. Travel</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>2,000</td><td>2</td><td>2</td><td>3</td><td>$35.00</td><td>$77.78</td><td>$500.00</td><td>TBD</td><td class="check">$577.78</td></tr>
+        <tr><td>3,000</td><td>3</td><td>3</td><td>4</td><td>$35.00</td><td>$116.67</td><td>$500.00</td><td>TBD</td><td class="check">$616.67</td></tr>
+        <tr><td>5,000</td><td>4</td><td>6</td><td>7</td><td>$35.00</td><td>$194.44</td><td>$500.00</td><td>TBD</td><td class="check">$694.44</td></tr>
+        <tr><td>10,000</td><td>8</td><td>11</td><td>14</td><td>$35.00</td><td>$388.89</td><td>$500.00</td><td>TBD</td><td class="check">$888.89</td></tr>
+        <tr><td>20,000</td><td>22</td><td>17</td><td>28</td><td>$35.00</td><td>$583.33</td><td>$500.00</td><td>TBD</td><td class="check">$1,083.33</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:0.75rem; color:var(--text-muted); margin-top:0.8rem; font-style:italic; text-align:center;">Travel costs TBD per engagement. Management fee is flat $500 per visit. Labor estimated at 4-second-per-item pace.</p>
+</div>
+
+<div class="compare-section">
+  <h2>Side-by-Side Comparison</h2>
+  <div class="compare-table-wrap">
+    <table class="compare">
+      <thead><tr><th>Feature</th><th>AD Elevate M830</th><th>Midas Flagtag M750</th><th>EOS-241 M730</th></tr></thead>
+      <tbody>
+        <tr><td>Chip</td><td>Impinj M830</td><td>Impinj M750</td><td>Impinj M730</td></tr>
+        <tr><td>Antenna</td><td>72 x 23 mm</td><td>34.4 x 18 mm</td><td>42 x 16 mm</td></tr>
+        <tr><td>EPC</td><td>128-bit</td><td>96-bit</td><td>128-bit</td></tr>
+        <tr><td>On-Metal</td><td class="no-check">-</td><td class="check">Yes</td><td class="no-check">-</td></tr>
+        <tr><td>On-Fabric</td><td class="check">Yes</td><td class="no-check">-</td><td class="check">Yes</td></tr>
+        <tr><td>Branding</td><td class="no-check">-</td><td class="check">Blank/1-Color/4CP</td><td class="no-check">-</td></tr>
+        <tr><td>Best For</td><td>Soft goods, apparel</td><td>F&amp;B, metal surfaces</td><td>Compact on-fabric</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="footer">
+  <p>RFID Tag Catalog | Internal Use | Updated May 2026</p>
+  <p style="margin-top:0.5rem; font-size:0.7rem;">Midas Flagtag blank pricing per Atlas RFID (May 6, 2026). Preprinted pricing per MPI Label Systems. EOS-241 pricing per Starport.</p>
+</div>
+
+<script>
+function rfidFilter(category, btn) {
+  var cards = document.querySelectorAll('#rfid-catalog .card');
+  var buttons = document.querySelectorAll('#rfid-catalog-root .filter-btn');
+  for (var i = 0; i < buttons.length; i++) { buttons[i].className = 'filter-btn'; }
+  btn.className = 'filter-btn active';
+  for (var j = 0; j < cards.length; j++) {
+    if (category === 'all') { cards[j].style.display = ''; continue; }
+    var cats = cards[j].getAttribute('data-categories').split(',');
+    cards[j].style.display = cats.indexOf(category) >= 0 ? '' : 'none';
+  }
+}
+</script>
+
+</div>
+{{/html}}
